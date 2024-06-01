@@ -1,14 +1,22 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../assets/Form_Logo.jpg'
+import AllApiUrls from '../services';
+import { toast } from 'react-toastify';
+import Context from '../context';
+
+
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
-  const [data, setData] = useState({
+  const [formData, setData] = useState({
     email: "",
     password: ""
   });
+  const navigate = useNavigate()
+  const {fetchUserInfo} = useContext(Context)
+  
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -18,12 +26,43 @@ function Login() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission
-  };
 
-  console.log("data login", data);
+    try {
+      const response = await fetch(AllApiUrls.signIn.url, {
+        method: AllApiUrls.signIn.method,
+        credentials : 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(
+          `HTTP error! status: ${response.status}, message: ${errorData.message}`
+        );
+      }
+
+      const data = await response.json();
+
+      if (data.success) {
+        toast.success(data.message);
+        navigate('/');
+        fetchUserInfo()
+      } else if (data.error) {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.error('Failed to fetch:', error.message);
+      toast.error('Failed to fetch: ' + error.message);
+    }
+  };
+  
+
+  
 
   return (
     <>
@@ -41,7 +80,7 @@ function Login() {
             type="email" 
             placeholder="example@example.com"
             name="email"
-            value={data.email} 
+            value={formData.email} 
             onChange={handleOnChange}
             className="w-full p-2 border border-gray-300 rounded" 
             required 
@@ -55,7 +94,7 @@ function Login() {
               type={showPassword ? "text" : "password"}
               placeholder="********"
               name="password"
-              value={data.password}
+              value={formData.password}
               onChange={handleOnChange}
               className="w-full p-2 border border-gray-300 rounded pr-10"
               required
