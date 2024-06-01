@@ -4,7 +4,7 @@ import { FaSearch, FaMapMarkerAlt } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
 import {FaRegCircleUser} from "react-icons/fa6"
 
-const Navbar = () => {
+const Header = () => {
     return (
         <header>
             <nav id='navbar' className="flex items-center justify-evenly h-16 bg-[#0f1111] text-white  ">
@@ -51,4 +51,4 @@ const Navbar = () => {
     );
 };
 
-export default Navbar;
+export default Header;

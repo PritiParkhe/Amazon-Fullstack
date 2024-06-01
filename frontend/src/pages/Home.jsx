@@ -1,8 +1,15 @@
 import React from 'react'
-
+import Header from '../components/Header/Header'
+import Herosection from "../components/Header/Herosection";
+import Footer from "../components/Footer/Footer"
 const Home = () => {
   return (
-    <div className='bg-blue-700 '>Home</div>
+    <>
+      <Header/>
+      <Herosection/>
+      <Footer/>
+    </>
+    
   )
 }
 
