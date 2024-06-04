@@ -1,10 +1,17 @@
 import React from 'react';
-import amazonLogo from "../../assets/Logo.jpg"; // Ensure this is the correct path
+import amazonLogo from "../../assets/Logo.jpg"; 
 import { FaSearch, FaMapMarkerAlt } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
-import {FaRegCircleUser} from "react-icons/fa6"
+import { FaRegCircleUser } from "react-icons/fa6";
+import { useSelector } from 'react-redux';
+ 
 
 const Header = () => {
+    const user = useSelector(state => state?.user?.user);
+
+
+    
+    
     return (
         <header>
             <nav id='navbar' className="flex items-center justify-evenly h-16 bg-[#0f1111] text-white  ">
@@ -43,8 +50,17 @@ const Header = () => {
                     </div>     
                 </div>
                 <div className='text-3xl cursor-pointer'>
-                    <FaRegCircleUser/>
-                </div>
+                {user?.profileImage ? (
+                  <img 
+                    src={user?.profileImage}
+                    alt={user?.name}
+                    className='w-10 h-10 rounded-full'
+                  />
+                ) : (
+                  <FaRegCircleUser />
+                )}
+              </div>
+                
             </nav>
         </header>
 

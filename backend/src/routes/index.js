@@ -3,6 +3,7 @@ import { userSignupController } from "../controllers/userSignup.js";
 import { userSigninController } from "../controllers/userSignin.js";
 import { userInfoController } from "../controllers/userInfo.js";
 import { authToken } from "../middleware/auth.js";
+import { userLogoutController } from "../controllers/userLogout.js";
 
 
 export const router = express.Router();
@@ -11,7 +12,8 @@ export const router = express.Router();
 router.post('/signup', userSignupController);
 router.post('/signin', userSigninController);
 router.get('/user', authToken, userInfoController)
-// You can add more routes here
+router.get('/logout',userLogoutController)
+
 
 export default router;
 

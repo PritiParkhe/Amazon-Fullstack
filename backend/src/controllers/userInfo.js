@@ -6,7 +6,7 @@ export async function userInfoController(req, res) {
     const user = await userModel.findById(req.userId);
     res.status(200).json({
       message: "User found",
-      user,
+      data: user,
       error: false,
       success: true,
     });

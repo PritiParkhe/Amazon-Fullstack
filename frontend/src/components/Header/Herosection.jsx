@@ -1,13 +1,43 @@
 import React, { useState } from 'react';
-import { FaBars, FaTimes, FaUser } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { FaBars, FaTimes } from 'react-icons/fa';
+import { Link, useNavigate } from 'react-router-dom';
 import Hero from "../../assets/hero.jpg";
+import { FaRegCircleUser } from "react-icons/fa6";
+import AllApiUrls from '../../services';
+import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserDetails } from '../../stores/userSlice';
 
 function Herosection() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const user = useSelector(state => state?.user?.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
+  };
+
+  const handleUserLogout = async () => {
+    const response = await fetch(AllApiUrls.logout.url, {
+      method: AllApiUrls.logout.method,
+      credentials: 'include',
+    });
+    const data = await response.json();
+    if (data.success) {
+      toast.success(data.message);
+      dispatch(setUserDetails(null));
+    } else if (data.error) {
+      toast.error(data.message);
+    }
+  };
+
+  const handleProfileClick = () => {
+    if (user) {
+      navigate('/user');
+    } else {
+      navigate('/login');
+    }
   };
 
   return (
@@ -41,12 +71,26 @@ function Herosection() {
           <div className="fixed inset-0 bg-black bg-opacity-50 z-10" onClick={toggleMenu}></div>
           <div className="fixed top-0 left-0 min-w-[365px] h-full bg-white text-black z-20 shadow-lg">
             <div className="bg-[#232f3e] h-12 flex items-center justify-between mb-4 px-4 text-white">
-              <FaUser />
+              <div className='text-3xl cursor-pointer' onClick={handleProfileClick}>
+                {user?.profileImage ? (
+                  <img 
+                    src={user?.profileImage}
+                    alt={user?.name}
+                    className='w-10 h-10 rounded-full'
+                  />
+                ) : (
+                  <FaRegCircleUser />
+                )}
+              </div>
               <Link to={"/login"} className="ml-2 font-bold" onClick={toggleMenu}>Hello, sign in</Link>
               <FaTimes className="cursor-pointer" onClick={toggleMenu} />
             </div>
             <ul>
-              <li>Sign Out</li>
+              {user?._id ? (
+                <button onClick={handleUserLogout}>Sign Out</button>
+              ) : (
+                <Link to={'/login'}>Sign In</Link>
+              )}
             </ul>
           </div>
         </>
@@ -62,4 +106,4 @@ function Herosection() {
   );
 }
 
-export default Herosection
+export default Herosection;

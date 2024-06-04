@@ -12,7 +12,12 @@ const AllApiUrls = {
     url : `${backendDomain}/api/user`,
     method : "get",
 
+  },
+  logout:{
+    url : `${backendDomain}/api/logout`,
+    method : "get"
   }
+
 
 }
 export default AllApiUrls;
