@@ -23,7 +23,7 @@ export default function App() {
       dispatch(setUserDetails(dataResponse.data))
     }
 
-    console.log("userdata",response);
+    
   }
   useEffect(()=>{
     /* user Information*/

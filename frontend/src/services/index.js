@@ -16,6 +16,14 @@ const AllApiUrls = {
   logout:{
     url : `${backendDomain}/api/logout`,
     method : "get"
+  },
+  allUser : {
+    url : `${backendDomain}/api/all-users`,
+    method : "get"
+  },
+  updateUser : {
+    url : `${backendDomain}/api/update-user`,
+    method : "post"
   }
 
 

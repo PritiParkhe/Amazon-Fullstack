@@ -123,7 +123,7 @@ function Signup() {
               </div>
             </div>
 
-            <button className='h-9 w-full mt-3 px-4 bg-yellow-500 border-none outline-none rounded-md mb-5 hover:bg-gray-200 border border-gray-300'>Create Account in Amazon</button>
+            <button className='h-9 w-full mt-3 px-4 bg-yellow-500 border-none outline-none rounded-md mb-5 hover:bg-gray-200 border border-gray-300' onClick={handleSubmit}>Create Account in Amazon</button>
             <p className='text-xs w-full text-center mb-5'>
               By continuing, you agree to Amazon's
               <span className='text-blue-600'> Conditions of Use </span>and

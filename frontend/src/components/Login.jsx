@@ -112,7 +112,7 @@ function Login() {
           </Link>
         </div>
 
-        <button type="submit" className="w-3/5 h-9 bg-yellow-500 border-none outline-none rounded-lg mt-8">
+        <button type="submit" className="w-3/5 h-9 bg-yellow-500 border-none outline-none rounded-lg mt-8" onClick={handleSubmit}>
           Login
         </button>
 
