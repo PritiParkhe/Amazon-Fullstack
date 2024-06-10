@@ -13,10 +13,9 @@ const AdminPanel = () => {
 
   useEffect(()=>{
     if (user?.role!== Role.ADMIN) {
-      navigate("/")
-      
+      navigate("/")  
     }
-  },[user])
+  },[user, navigate])
   return (
     <>
       <Header/>
