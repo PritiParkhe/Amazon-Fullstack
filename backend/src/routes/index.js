@@ -7,6 +7,8 @@ import { userLogoutController } from "../controllers/userLogout.js";
 import { allUsers } from "../controllers/allUsers.js";
 import { updateUser } from "../controllers/updateUser.js";
 import { UploadProductController } from "../controllers/uploadProduct.js";
+import { getAllProductController } from "../controllers/getProduct.js";
+import { updateProductController } from "../controllers/updateProduct.js";
 
 
 export const router = express.Router();
@@ -21,6 +23,8 @@ router.get('/all-users', authToken ,allUsers)
 router.post('/update-user', authToken, updateUser)
 //upload product
 router.post('/upload-product', authToken, UploadProductController)
+router.get('/all-product', getAllProductController)
+router.post('/update-product',authToken,updateProductController)
 
 
 export default router;
