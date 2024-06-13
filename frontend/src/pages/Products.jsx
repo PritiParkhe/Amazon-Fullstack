@@ -30,19 +30,22 @@ function Products() {
       </div>
 
       {/** All Product */}
-      <div className='flex items-center gap-5 py-4'>
-        {
-          allProduct.map((product,index)=>{
-            return(
-              <AdminProductCard data={product} key={index + 'allProduct'} fetchData ={getAllProducts}/>
+      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 h-[calc(100vh-190px)] overflow-y-scroll  mt-3'>
+        
+          {
+            allProduct.map((product,index)=>{
+              return(
+                <AdminProductCard data={product} key={index + 'allProduct'} fetchData ={getAllProducts}  />
 
-            )
-          })
-        }
+              )
+            })
+          }
+       
+        
       </div>
       {
         openUploadProduct  && (
-        <UploadProduct onclose={()=>setOpenUploadProduct(false)}/>
+        <UploadProduct onclose={()=>setOpenUploadProduct(false)} fetchData={getAllProducts}/>
       )
       }
       
