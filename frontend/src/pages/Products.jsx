@@ -30,7 +30,7 @@ function Products() {
       </div>
 
       {/** All Product */}
-      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 h-[calc(100vh-190px)] overflow-y-scroll  mt-3'>
+      <div className='grid lg:grid-cols-5 gap-4 h-[calc(100vh-190px)] overflow-y-scroll  mt-3'>
         
           {
             allProduct.map((product,index)=>{
