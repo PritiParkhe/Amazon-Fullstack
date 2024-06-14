@@ -10,28 +10,23 @@ import box7_image from '../assets/box7_image.jpg';
 import box8_image from '../assets/box8_image.jpg';
 import { Link } from 'react-router-dom';
 
-
-
 const CategoryProductsList = () => {
   const [categoryProducts, setCategoryProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  
+
   useEffect(() => {
     const getAllCategoryProducts = async () => {
-      setLoading(true);
       try {
         const response = await fetch(AllApiUrls.getCategoryProduct.url);
         const dataResponse = await response.json();
         setCategoryProducts(dataResponse.data);
       } catch (error) {
         console.error('Error fetching data:', error);
-      } finally {
-        setLoading(false);
       }
     };
-
+  
     getAllCategoryProducts();
   }, []);
+  
 
   const categories = [
     {
@@ -69,11 +64,11 @@ const CategoryProductsList = () => {
   ];
 
   return (
-    <div className='container mx-auto p-4 bg-gray-100'>
-      <div className='flex flex-wrap items-center justify-between gap-2'>
+    <div className='container mx-auto px-4 relative -mt-48'>
+      <div className='absolute top-0 left-0 w-full h-full bg-white opacity-50 blur-lg z-0'></div>
+      <div className='relative z-10 flex flex-wrap items-center justify-between gap-2'>
         {categories.map((category, index) => (
-          <>
-            <Link to={`/product-category/${category.title}`} key={index} className="w-[24%] h-[420px] bg-white p-4 rounded shadow-md">
+          <Link to={`/product-category/${category.title}`} key={index} className="h-[420px] w-[24%] bg-white p-4 rounded shadow-md">
             <div className="mx-4">
               <h2 className="text-2xl font-semibold capitalize mb-2">{category.title}</h2>
               <div className='h-[300px]'>
@@ -86,8 +81,6 @@ const CategoryProductsList = () => {
               <p className="text-[#007185] mt-2">See more</p>
             </div>
           </Link>
-          </>
-          
         ))}
       </div>
     </div>
