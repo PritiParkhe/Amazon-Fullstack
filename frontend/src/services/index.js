@@ -36,6 +36,10 @@ const AllApiUrls = {
   updateProduct : {
     url : `${backendDomain}/api/update-product`,
     method : "post"
+  },
+  getCategoryProduct : {
+    url : `${backendDomain}/api/get-productsCategorywise`,
+    method : "get"
   }
 
 

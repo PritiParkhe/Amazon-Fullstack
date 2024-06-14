@@ -22,8 +22,8 @@ function Products() {
   
   
   return (
-    <div className='bg-slate-100'>
-      <div className='bg-white py-2 px-4 flex justify-between items-center'>
+    <div className='bg-gray-100'>
+      <div className='bg-white py-2 px-4 flex justify-between items-center shadow-xl'>
         <h2 className='font-bold text-lg'>All Products</h2>
         <button className=' bg-yellow-400  hover:bg-yellow-500 py-2 px-4 rounded-full trnsition-all' 
         onClick={()=>setOpenUploadProduct(true)}>Upload Product</button>
