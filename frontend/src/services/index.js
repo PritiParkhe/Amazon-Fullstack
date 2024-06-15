@@ -38,10 +38,13 @@ const AllApiUrls = {
     method : "post"
   },
   getCategoryProduct : {
-    url : `${backendDomain}/api/get-productsCategorywise`,
+    url : `${backendDomain}/api/get-productsCategory`,
     method : "get"
+  },
+  getCategoryWiseProduct : {
+    url : `${backendDomain}/api/get-categorywiseProducts`,
+    method : "post"
   }
-
 
 }
 export default AllApiUrls;

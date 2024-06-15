@@ -140,11 +140,11 @@ function Herosection() {
 
       <div className="container mx-auto px-4">
         <div className="relative h-screen w-full bg-gray-200 overflow-hidden">
-          <div className="absolute z-10 h-full w-full flex items-center justify-between text-4xl text-white">
-            <button className="py-16 px-3 hover:border border-[#007185]" onClick={prevImg}>
+          <div className="absolute z-10  w-full flex items-center justify-between text-4xl text-white mt-0">
+            <button className="py-16 px-5 h-[250px] hover:border border-[#007185]" onClick={prevImg}>
               <TfiAngleLeft />
             </button>
-            <button className="py-16 px-3 hover:border border-[#007185]" onClick={nextImg}>
+            <button className="py-16 px-5 h-[250px] hover:border border-[#007185]" onClick={nextImg}>
               <TfiAngleRight />
             </button>
           </div>
