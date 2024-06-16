@@ -15,6 +15,7 @@ const EditProduct = ({ onclose, productData, fetchData }) => {
     title: productData?.title,
     brandName: productData?.brandName,
     category: productData?.category,
+    subCategory: productData?.subCategory,
     productImage: productData?.productImage || [],
     description: productData?.description,
     price: productData?.price,
@@ -125,23 +126,46 @@ const EditProduct = ({ onclose, productData, fetchData }) => {
             />
           </div>
           <div className="w-full mb-3">
-            <label htmlFor='category' className="mb-2 font-semibold">Category :</label>
-            <select
-              id='category'
-              name='category'
-              className="w-full mt-1 p-2 mb-2 border border-gray-300 rounded bg-slate-50"
-              value={data.category}
-              onChange={handleOnChange}
-              required
-            >
-              <option value={""} >Select Category </option>
-              {
-                productCategory.map((e) => (
-                  <option value={e.value} key={e.value} required>
-                    {e.label}
-                  </option>
-                ))}
-            </select>
+      <label htmlFor='category' className="mb-2 font-semibold">Category :</label>
+      <select
+        id='category'
+        name='category'
+        className="w-full mt-1 p-2 mb-2 border border-gray-300 rounded bg-slate-50"
+        value={data.category}
+        onChange={handleOnChange}
+        required
+      >
+        <option value="">Select Category</option>
+        {productCategory.map((category) => (
+          <option key={category.title} value={category.title}>
+            {category.title}
+          </option>
+        ))}
+      </select>
+
+      {/* Render subcategory dropdown based on selected category */}
+      {data.category && (
+        <div className="mt-3">
+          <label htmlFor='subcategory' className="mb-2 font-semibold">Subcategory :</label>
+          <select
+            id='subcategory'
+            name='subcategory'
+            className="w-full mt-1 p-2 mb-2 border border-gray-300 rounded bg-slate-50"
+            value={data.subCategory}
+            onChange={handleOnChange}
+            required
+          >
+            <option value="">Select Subcategory</option>
+            {productCategory
+              .find(category => category.title === data.category)
+              ?.options.map((subcategory) => (
+                <option key={subcategory.value} value={subcategory.value}>
+                  {subcategory.label}
+                </option>
+              ))}
+          </select>
+        </div>
+      )}
           </div>
           <div className="w-full mb-3">
             <label htmlFor='productImage' className="font-semibold">Product Image :</label>

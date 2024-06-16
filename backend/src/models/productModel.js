@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+
+// Define the schema for the Product model
 const productSchema = new mongoose.Schema(
   {
     title: {
@@ -10,6 +12,10 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
     category: {
+      type: String,
+      required: true,
+    },
+    subCategory: {
       type: String,
       required: true,
     },
@@ -26,8 +32,11 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-},{ timestamps: true }
-)
+  },
+  { timestamps: true }
+);
 
-const productModel = mongoose.model("Product", productSchema)
+// Create the Product model using the schema
+const productModel = mongoose.model("Product", productSchema);
+
 export default productModel;

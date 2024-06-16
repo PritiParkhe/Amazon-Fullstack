@@ -11,7 +11,7 @@ const Home = () => {
       <Header/>
       <Herosection/>
       <CategoryProductsList/>
-      <HorizontalCard category={"Airpodes"} heading={"Pick up where you left off"}/>
+      <HorizontalCard category={"airpodes"} heading={"Pick up where you left off"}/>
       <Footer/>
     </>
     

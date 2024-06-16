@@ -15,6 +15,7 @@ function UploadProduct({ onclose }) {
     title: "",
     brandName: "",
     category: "",
+    subCategory: "",
     productImage: [],
     description: "",
     price: "",
@@ -145,7 +146,7 @@ function UploadProduct({ onclose }) {
             id='subcategory'
             name='subcategory'
             className="w-full mt-1 p-2 mb-2 border border-gray-300 rounded bg-slate-50"
-            value={data.subcategory}
+            value={data.subCategory}
             onChange={handleOnChange}
             required
           >
@@ -160,7 +161,7 @@ function UploadProduct({ onclose }) {
           </select>
         </div>
       )}
-    </div>
+          </div>
           <div className="w-full mb-3">
             <label htmlFor='productImage' className="font-semibold">Product Image :</label>
             <label htmlFor='uploadImage'>
