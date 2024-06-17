@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const HorizontalCard = ({ products, heading }) => {
   const scrollRef = useRef(null);
@@ -32,13 +33,13 @@ const HorizontalCard = ({ products, heading }) => {
           style={{ maxWidth: `calc(100% - 32px)` }} // Adjusted max width to account for padding
         >
           {products.map((product, index) => (
-            <div key={index} className="flex-shrink-0 w-48 h-48">
+            <Link to={"product/"+product?._id} key={index} className="flex-shrink-0 w-48 mt-6 h-48">
               <img
                 src={product.productImage[0]}
                 alt={product.title}
                 className="object-contain h-40 w-full mb-2 rounded-md hover:scale-110 transition-transform duration-200"
               />
-            </div>
+            </Link>
           ))}
         </div>
         <button onClick={scrollRight} className="absolute right-0 mr-2 text-gray-600 p-2 z-10">

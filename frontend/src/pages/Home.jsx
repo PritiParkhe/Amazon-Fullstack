@@ -1,34 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header/Header';
 import Herosection from "../components/Header/Herosection";
-import Footer from "../components/Footer/Footer";
+import Footer from "../components/Footer/Footer"
 import CategoryProductsList from '../components/CategoryProductsList';
 import HorizontalCard from '../components/HorizontalCard';
 import fetchCategoryWiseProduct from "../Helper/getCategoryWiseProduct";
+import VerticalCardWithDetails from '../components/VerticalCardWithDetails';
 
 const Home = () => {
-  const [products, setProducts] = useState([]);
-  const subCategory = "airpodes"; // Example subcategory, ensure it matches exactly with your database and productCategory
+  const [airpodesProducts, setAirpodesProducts] = useState([]);
+  const [mobileProducts, setMobileProducts] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const dataResponse = await fetchCategoryWiseProduct(subCategory);
-        setProducts(dataResponse.data);
+        const airpodesResponse = await fetchCategoryWiseProduct('airpodes');
+        setAirpodesProducts(airpodesResponse.data);
+        
+        const mobileResponse = await fetchCategoryWiseProduct('mobiles');
+        setMobileProducts(mobileResponse.data);
       } catch (error) {
         console.error('Error fetching products:', error);
       }
     };
 
     fetchData();
-  }, [subCategory]);
+  }, []);
 
   return (
     <>
       <Header />
       <Herosection />
       <CategoryProductsList />
-      <HorizontalCard products={products} heading={"Pick up where you left off"} />
+      <HorizontalCard products={airpodesProducts} heading={"Pick up where you left off"} />
+      <VerticalCardWithDetails products={mobileProducts} heading={"Latest in mobile"}/>
       <Footer />
     </>
   );
