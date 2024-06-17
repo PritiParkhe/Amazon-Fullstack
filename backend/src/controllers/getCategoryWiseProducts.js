@@ -1,19 +1,19 @@
 import productModel from "../models/productModel.js";
+
 const getCategoryWiseProductController = async (req, res) => {
   try {
-    const { category } = req.body;
-    console.log("Received category:", category);
+    const { subCategory } = req.body;
 
-    if (!category) {
+    if (!subCategory) {
       return res.status(400).json({
-        message: "Category is required",
+        message: "SubCategory is required",
         success: false,
         error: true
       });
     }
 
-    const products = await productModel.find({ category });
-    console.log(products, "data");
+    const products = await productModel.find({ subCategory });
+    
 
     res.json({
       data: products,

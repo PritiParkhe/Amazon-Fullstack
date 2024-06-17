@@ -18,7 +18,7 @@ function Products() {
 
   useEffect(()=>{
     getAllProducts()
-  },[])
+  },[getAllProducts])
   
   
   return (
