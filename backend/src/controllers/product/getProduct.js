@@ -1,4 +1,4 @@
-import productModel from '../models/productModel.js'
+import productModel from '../../models/productModel.js'
 const getAllProductController = async(req,res)=>{
   try {
     const getallProduct = await productModel.find().sort({createdAt : -1 })

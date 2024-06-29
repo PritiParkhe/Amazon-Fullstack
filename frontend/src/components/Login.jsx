@@ -8,7 +8,7 @@ import Context from '../context';
 
 
 
-function reLogin() {
+function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setData] = useState({
     email: "",
@@ -66,7 +66,7 @@ function reLogin() {
 
   return (
     <>
-    <div className="w-2/5 min-w-[450px] h-fit p-4 m-auto flex flex-col items-center">
+    <div className="w-2/5 min-w-[450px] h-fit p-4 m-auto flex flex-col items-center bg-white">
       <div className="mb-5">
         <img src={Logo} alt="" className="h-16" />
       </div>

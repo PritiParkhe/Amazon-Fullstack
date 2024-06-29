@@ -1,5 +1,4 @@
-import productModel from "../models/productModel.js";
-
+import productModel from "../../models/productModel.js"
 const getCategoryWiseProductController = async (req, res) => {
   try {
     const { subCategory } = req.body;

@@ -9,8 +9,7 @@ import AdminPanel from '../pages/AdminPanel';
 import AllUsers from '../pages/AllUsers';
 import Products from '../pages/Products';
 import ProductDetails from '../components/ProductDetails';
-import SubcategoryProducts from '../pages/SubcategoryProducts';
-import SubcategoryProductsShow from '../pages/SubcategoryProductsShow';
+// import SubcategoryProducts from '../pages/SubcategoryProducts';
 import Cards from '../components/Cards';
 
 
@@ -40,18 +39,18 @@ const router = createBrowserRouter([
         path: "/user",
         element: <User/>
       },
-      {
-        path: "/product-category/:categoryNames",
-        element: <SubcategoryProducts/>
-      },
+      // {
+      //   path: "/product-category/:categoryNames",
+      //   element: <SubcategoryProducts/>
+      // },
       {
         path: "product/:id",
         element : <ProductDetails/>
       },
-      {
-        path : "/product-category/:category/:subcategory",
-        element : <SubcategoryProducts/>
-      },
+      // {
+      //   path : "/product-category/:category/:subcategory",
+      //   element : <SubcategoryProducts/>
+      // },
       {
         path : "product-category/:category/:subcategory",
         element : <Cards/>

@@ -1,4 +1,4 @@
-import userModel from "../models/userModel.js"; // Ensure this matches the export in userModel.js
+import userModel from "../../models/userModel.js"; // Ensure this matches the export in userModel.js
 
 export async function userInfoController(req, res) {
   try {

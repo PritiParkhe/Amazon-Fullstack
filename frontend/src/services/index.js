@@ -49,6 +49,10 @@ const AllApiUrls = {
     url: `${backendDomain}/api/subcategory-products`,
     method: "post",
   },
+  getProductDetails: {
+    url: `${backendDomain}/api/product-deatails`,
+    method: "post",
+  },
 
 }
 export default AllApiUrls;

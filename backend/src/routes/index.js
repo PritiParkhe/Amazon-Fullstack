@@ -1,17 +1,18 @@
 import express from "express";
-import { userSignupController } from "../controllers/userSignup.js";
-import { userSigninController } from "../controllers/userSignin.js";
-import { userInfoController } from "../controllers/userInfo.js";
+import { userSignupController } from "../controllers/user/userSignup.js";
+import { userSigninController } from "../controllers/user/userSignin.js";
+import { userInfoController } from "../controllers/user/userInfo.js";
 import { authToken } from "../middleware/auth.js";
-import { userLogoutController } from "../controllers/userLogout.js";
-import { allUsers } from "../controllers/allUsers.js";
-import { updateUser } from "../controllers/updateUser.js";
-import { UploadProductController } from "../controllers/uploadProduct.js";
-import { getAllProductController } from "../controllers/getProduct.js";
-import { updateProductController } from "../controllers/updateProduct.js";
-import { getCategoryProductController } from "../controllers/getCategoryProduct.js";
-import { getCategoryWiseProductController } from "../controllers/getCategoryWiseProducts.js";
-import { SubcategoryWiseProductController } from '../controllers/subCategoryWiseProducts.js';
+import { userLogoutController } from "../controllers/user/userLogout.js";
+import { allUsers } from "../controllers/user/allUsers.js";
+import { updateUser } from "../controllers/user/updateUser.js";
+import { UploadProductController } from "../controllers/product/uploadProduct.js";
+import { getAllProductController } from "../controllers/product/getProduct.js";
+import { updateProductController } from "../controllers/product/updateProduct.js";
+import { getCategoryProductController } from "../controllers/product/getCategoryProduct.js";
+import { getCategoryWiseProductController } from "../controllers/product/getCategoryWiseProducts.js";
+import { SubcategoryWiseProductController } from '../controllers/product/subCategoryWiseProducts.js';
+import { getProductDetails } from "../controllers/product/getProductDetails.js";
 
 
 export const router = express.Router();
@@ -33,6 +34,7 @@ router.post('/update-product',authToken,updateProductController)
 router.get('/get-productsCategory', getCategoryProductController)
 router.post('/get-categorywiseProducts' , getCategoryWiseProductController)
 router.post('/subcategory-products', SubcategoryWiseProductController);
+router.post("/product-deatails", getProductDetails)
 
 
 export default router;

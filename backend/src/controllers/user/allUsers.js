@@ -1,4 +1,4 @@
-import userModel from "../models/userModel.js";
+import userModel from "../../models/userModel.js";
 async function allUsers(req,res){
   try {
     console.log("user id", req.userId );
