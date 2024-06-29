@@ -5,7 +5,6 @@ import Footer from "../components/Footer/Footer"
 import CategoryProductsList from '../components/CategoryProductsList';
 import HorizontalCard from '../components/HorizontalCard';
 import fetchCategoryWiseProduct from "../Helper/getCategoryWiseProduct";
-import VerticalCardWithDetails from '../components/VerticalCardWithDetails';
 
 const Home = () => {
   const [airpodesProducts, setAirpodesProducts] = useState([]);
@@ -33,7 +32,7 @@ const Home = () => {
       <Herosection />
       <CategoryProductsList />
       <HorizontalCard products={airpodesProducts} heading={"Pick up where you left off"} />
-      <VerticalCardWithDetails products={mobileProducts} heading={"Latest in mobile"}/>
+      <HorizontalCard products={mobileProducts} heading={"Latest in mobile"}/>
       <Footer />
     </>
   );

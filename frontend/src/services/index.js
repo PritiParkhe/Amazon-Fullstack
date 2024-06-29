@@ -44,7 +44,11 @@ const AllApiUrls = {
   getCategoryWiseProduct : {
     url : `${backendDomain}/api/get-categorywiseProducts`,
     method : "post"
-  }
+  },
+  getSubCategoryWiseProducts: {
+    url: `${backendDomain}/api/subcategory-products`,
+    method: "post",
+  },
 
 }
 export default AllApiUrls;

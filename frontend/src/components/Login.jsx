@@ -8,7 +8,7 @@ import Context from '../context';
 
 
 
-function Login() {
+function reLogin() {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setData] = useState({
     email: "",

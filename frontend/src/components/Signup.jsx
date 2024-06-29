@@ -37,9 +37,7 @@ function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    
-    
+  
     try {
       const response = await fetch(AllApiUrls.signUp.url, {
         method: AllApiUrls.signUp.method,
