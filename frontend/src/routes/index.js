@@ -39,18 +39,10 @@ const router = createBrowserRouter([
         path: "/user",
         element: <User/>
       },
-      // {
-      //   path: "/product-category/:categoryNames",
-      //   element: <SubcategoryProducts/>
-      // },
       {
         path: "product/:id",
         element : <ProductDetails/>
       },
-      // {
-      //   path : "/product-category/:category/:subcategory",
-      //   element : <SubcategoryProducts/>
-      // },
       {
         path : "product-category/:category/:subcategory",
         element : <Cards/>

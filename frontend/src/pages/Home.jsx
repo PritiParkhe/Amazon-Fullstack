@@ -30,7 +30,7 @@ const Home = () => {
     <>
       <Header />
       <Herosection />
-      <CategoryProductsList />
+      <CategoryProductsList products={airpodesProducts} heading={"Pick up where you left off"} />
       <HorizontalCard products={airpodesProducts} heading={"Pick up where you left off"} />
       <HorizontalCard products={mobileProducts} heading={"Latest in mobile"}/>
       <Footer />
