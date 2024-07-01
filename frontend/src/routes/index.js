@@ -8,7 +8,7 @@ import User from "../pages/User";
 import AdminPanel from "../pages/AdminPanel";
 import AllUsers from "../pages/AllUsers";
 import Products from "../pages/Products";
-import ProductDetails from "../components/ProductDetails";
+import ProductDetails from "../pages/ProductDetails";
 // import SubcategoryProducts from '../pages/SubcategoryProducts';
 import CategoryCardsList from "../pages/CategoryCardsList";
 

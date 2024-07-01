@@ -45,14 +45,11 @@ const AllApiUrls = {
     url : `${backendDomain}/api/get-categorywiseProducts`,
     method : "post"
   },
-  getSubCategoryWiseProducts: {
-    url: `${backendDomain}/api/subcategory-products`,
-    method: "post",
-  },
   getProductDetails: {
-    url: `${backendDomain}/api/product-deatails`,
+    url: `${backendDomain}/api/product-details`,
     method: "post",
   },
+  
 
 }
 export default AllApiUrls;
