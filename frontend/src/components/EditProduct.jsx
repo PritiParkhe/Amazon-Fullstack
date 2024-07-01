@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Logo from '../assets/Form_Logo.jpg';
 import { CgClose } from "react-icons/cg";
 import { FaCloudUploadAlt } from "react-icons/fa";
@@ -24,15 +24,18 @@ const EditProduct = ({ onclose, productData, fetchData }) => {
   const [openFullScreenImg, setOpenFullScreenImg] = useState(false);
   const [hoverfullScreenImage, setHoverFullScreenImage] = useState("");
 
-  //upload Product
+  useEffect(() => {
+    setData((prevData) => ({ ...prevData, subCategory: "" }));
+  }, [data.category]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (data.productImage.length === 0) {
       toast.error('Please upload at least one product image');
       return;
     }
-  
+
     try {
       const response = await fetch(AllApiUrls.updateProduct.url, {
         method: AllApiUrls.updateProduct.method,
@@ -42,13 +45,13 @@ const EditProduct = ({ onclose, productData, fetchData }) => {
         },
         body: JSON.stringify(data)
       });
-  
+
       const responseData = await response.json();
-  
+
       if (response.ok) {
         toast.success(responseData?.message);
         onclose();
-        fetchData()
+        fetchData();
       } else {
         toast.error(responseData?.message);
       }
@@ -57,7 +60,6 @@ const EditProduct = ({ onclose, productData, fetchData }) => {
       console.error('Error:', error);
     }
   };
-  
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -66,26 +68,20 @@ const EditProduct = ({ onclose, productData, fetchData }) => {
 
   const handleUploadProduct = async (e) => {
     const file = e.target.files[0];
-    const uploloadImageOnCloudinary = await uploadImage(file);
-    console.log('uploadImage', uploloadImageOnCloudinary.url);
-    setData((prevData) => {
-      return {
-        ...prevData,
-        productImage: [...prevData.productImage, uploloadImageOnCloudinary.url]
-      };
-    });
+    const uploadImageOnCloudinary = await uploadImage(file);
+    setData((prevData) => ({
+      ...prevData,
+      productImage: [...prevData.productImage, uploadImageOnCloudinary.url]
+    }));
   };
 
   const deleteProductImage = async (index) => {
-    console.log(" image index", index);
     const newProductImg = [...data.productImage];
     newProductImg.splice(index, 1);
-    setData((prevData) => {
-      return {
-        ...prevData,
-        productImage: [...newProductImg]
-      };
-    });
+    setData((prevData) => ({
+      ...prevData,
+      productImage: newProductImg
+    }));
   };
 
   return (
@@ -126,46 +122,48 @@ const EditProduct = ({ onclose, productData, fetchData }) => {
             />
           </div>
           <div className="w-full mb-3">
-      <label htmlFor='category' className="mb-2 font-semibold">Category :</label>
-      <select
-        id='category'
-        name='category'
-        className="w-full mt-1 p-2 mb-2 border border-gray-300 rounded bg-slate-50"
-        value={data.category}
-        onChange={handleOnChange}
-        required
-      >
-        <option value="">Select Category</option>
-        {productCategory.map((category) => (
-          <option key={category.title} value={category.title}>
-            {category.title}
-          </option>
-        ))}
-      </select>
-
-      {/* Render subcategory dropdown based on selected category */}
-      {data.category && (
-        <div className="mt-3">
-          <label htmlFor='subcategory' className="mb-2 font-semibold">Subcategory :</label>
-          <select
-            id='subcategory'
-            name='subcategory'
-            className="w-full mt-1 p-2 mb-2 border border-gray-300 rounded bg-slate-50"
-            value={data.subCategory}
-            onChange={handleOnChange}
-            required
-          >
-            <option value="">Select Subcategory</option>
-            {productCategory
-              .find(category => category.title === data.category)
-              ?.options.map((subcategory) => (
-                <option key={subcategory.value} value={subcategory.value}>
-                  {subcategory.label}
+            <label htmlFor='category' className="mb-2 font-semibold">Category :</label>
+            <select
+              id='category'
+              name='category'
+              className="w-full mt-1 p-2 mb-2 border border-gray-300 rounded bg-slate-50"
+              value={data.category}
+              onChange={(e) => {
+                handleOnChange(e);
+                setData((prevData) => ({ ...prevData, subCategory: "" }));
+              }}
+              required
+            >
+              <option value="">Select Category</option>
+              {productCategory.map((category) => (
+                <option key={category.title} value={category.title}>
+                  {category.title}
                 </option>
               ))}
-          </select>
-        </div>
-      )}
+            </select>
+
+            {data.category && (
+              <div className="mt-3">
+                <label htmlFor='subcategory' className="mb-2 font-semibold">Subcategory :</label>
+                <select
+                  id='subcategory'
+                  name='subCategory'
+                  className="w-full mt-1 p-2 mb-2 border border-gray-300 rounded bg-slate-50"
+                  value={data.subCategory}
+                  onChange={handleOnChange}
+                  required
+                >
+                  <option value="">Select Subcategory</option>
+                  {productCategory
+                    .find(category => category.title === data.category)
+                    ?.options.map((subcategory) => (
+                      <option key={subcategory.value} value={subcategory.value}>
+                        {subcategory.label}
+                      </option>
+                    ))}
+                </select>
+              </div>
+            )}
           </div>
           <div className="w-full mb-3">
             <label htmlFor='productImage' className="font-semibold">Product Image :</label>
@@ -238,29 +236,23 @@ const EditProduct = ({ onclose, productData, fetchData }) => {
           <div className="w-full mb-3">
             <label htmlFor='description' className="mb-2 font-semibold">Description :</label>
             <textarea
-              placeholder='Enter product description here'
-              name="description"
-              id="description"
-              className='mt-2 h-28 bg-slate-50 border resize-none w-full p-2'
+              id='description'
+              name='description'
               rows={3}
-              onChange={handleOnChange}
+              placeholder='Enter Product Description'
+              className="w-full mt-1 p-2 mb-1 border border-gray-300 rounded bg-slate-50"
               value={data.description}
+              onChange={handleOnChange}
               required
-            ></textarea>
+            />
           </div>
-          <div className='h-10 w-full flex items-center justify-center'>
-            <button className="px-5 py-2 w-full bg-yellow-500 hover:bg-gray-300 border-gray-300 outline-none rounded-lg" type="submit">
-              Update Product
+          <div className="w-full mb-3">
+            <button type='submit' className='w-full bg-blue-500 hover:bg-blue-400 active:bg-blue-600 text-white px-4 py-2 rounded cursor-pointer text-center'>
+              Submit
             </button>
           </div>
         </form>
       </div>
-      {/**display Image */}
-      {
-        openFullScreenImg && (
-          <DisplayImage imgUrl={hoverfullScreenImage} onclose={() => setOpenFullScreenImg(false)} />
-        )
-      }
     </div>
   );
 }

@@ -10,7 +10,7 @@ import AllUsers from '../pages/AllUsers';
 import Products from '../pages/Products';
 import ProductDetails from '../components/ProductDetails';
 // import SubcategoryProducts from '../pages/SubcategoryProducts';
-import Cards from '../components/Cards';
+import CategoryCardsList from '../pages/CategoryCardsList';
 
 
 
@@ -44,8 +44,8 @@ const router = createBrowserRouter([
         element : <ProductDetails/>
       },
       {
-        path : "product-category/:category/:subcategory",
-        element : <Cards/>
+        path : "product-category/:category",
+        element : <CategoryCardsList/>
       },
 
       {

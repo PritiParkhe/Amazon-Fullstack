@@ -32,7 +32,7 @@ const CategoryProductsList = ({ products, heading }) => {
       <div className='absolute top-0 left-0 w-full h-full bg-gray-100 opacity-50 blur-lg z-0'></div>
       <div className='relative z-10 flex flex-wrap items-center justify-between gap-2'>
         <Link
-          to={`/product-category/${displayedProducts[0]?.title || ''}`} // Use the title of the first product for the link
+          to={`/product-category/category`} 
           className='h-[420px] w-[24%] bg-white p-4 rounded shadow-md'
         >
           <div>
@@ -41,7 +41,7 @@ const CategoryProductsList = ({ products, heading }) => {
               {displayedProducts.map((product, prodIndex) => (
                 <div key={prodIndex} className='text-center'>
                   <img
-                    src={product.productImage[0]} // Use the first image of each product
+                    src={product.productImage[0]} 
                     alt={product.title}
                     className='w-32 h-32 shadow-md object-cover mb-1'
                   />
