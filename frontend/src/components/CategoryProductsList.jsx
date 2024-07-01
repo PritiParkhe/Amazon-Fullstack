@@ -32,7 +32,7 @@ const CategoryProductsList = ({ products, heading }) => {
       <div className='absolute top-0 left-0 w-full h-full bg-gray-100 opacity-50 blur-lg z-0'></div>
       <div className='relative z-10 flex flex-wrap items-center justify-between gap-2'>
         <Link
-          to={`/product-category/category`} 
+          to={`/product`} 
           className='h-[420px] w-[24%] bg-white p-4 rounded shadow-md'
         >
           <div>
