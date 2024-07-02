@@ -4,12 +4,11 @@ import Footer from "../components/Footer/Footer";
 import { useParams } from "react-router-dom";
 import AllApiUrls from "../services";
 import SmallHerosection from "../components/Header/SmallHerosection";
-import { FaStar } from "react-icons/fa";
-import { FaStarHalf } from "react-icons/fa";
+import { FaStar, FaStarHalf } from "react-icons/fa";
 import displayINRCurrency from "../services/displayCurrency";
 import VerticalCard from "../components/VerticalCard";
 import fetchCategoryWiseProduct from "../Helper/getCategoryWiseProduct";
-
+import addToCart from '../Helper/addToCard.js'; // Fix import
 
 const ProductDetails = () => {
   const [data, setData] = useState({
@@ -107,13 +106,10 @@ const ProductDetails = () => {
     fetchData();
   }, []);
 
-  const handleAddToCart = (productId) => {
-    // Simulate adding to cart logic
-    console.log(`Adding product with ID ${productId} to cart`);
-
-    
+  const handleAddToCart = async (e, id) => {
+    await addToCart(e, id); // Pass the event object correctly
+    console.log(`Adding product with ID ${id} to cart`);
   };
-
 
   return (
     <>
@@ -204,7 +200,7 @@ const ProductDetails = () => {
 
             <div className="flex items-center gap-3 my-2">
               <button 
-                onClick={() => handleAddToCart(data._id)}
+                onClick={(e) => handleAddToCart(e, data._id)} // Pass the event object correctly
                 className="bg-[#ffd814] rounded px-3 py-1 min-w-[140px] hover:bg-[#c8ab1d]">
                 Add To Cart
               </button>
