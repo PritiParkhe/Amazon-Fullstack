@@ -107,6 +107,14 @@ const ProductDetails = () => {
     fetchData();
   }, []);
 
+  const handleAddToCart = (productId) => {
+    // Simulate adding to cart logic
+    console.log(`Adding product with ID ${productId} to cart`);
+
+    
+  };
+
+
   return (
     <>
       <Header />
@@ -195,7 +203,9 @@ const ProductDetails = () => {
             </div>
 
             <div className="flex items-center gap-3 my-2">
-              <button className="bg-[#ffd814] rounded px-3 py-1 min-w-[140px] hover:bg-[#c8ab1d]">
+              <button 
+                onClick={() => handleAddToCart(data._id)}
+                className="bg-[#ffd814] rounded px-3 py-1 min-w-[140px] hover:bg-[#c8ab1d]">
                 Add To Cart
               </button>
               <button className="bg-[#ffa41c] rounded px-3 py-1 min-w-[120px] hover:bg-[#ad7520]">

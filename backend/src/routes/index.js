@@ -12,30 +12,28 @@ import { updateProductController } from "../controllers/product/updateProduct.js
 import { getCategoryProductController } from "../controllers/product/getCategoryProduct.js";
 import { getCategoryWiseProductController } from "../controllers/product/getCategoryWiseProducts.js";
 import { getProductDetails } from "../controllers/product/getProductDetails.js";
-
+import { addToCartProductController } from "../controllers/product/addToCartProduct.js";
 
 export const router = express.Router();
 
 // Define routes
-router.post('/signup', userSignupController);
-router.post('/signin', userSigninController);
-router.get('/user', authToken, userInfoController)
-router.get('/logout',userLogoutController)
+router.post("/signup", userSignupController);
+router.post("/signin", userSigninController);
+router.get("/user", authToken, userInfoController);
+router.get("/logout", userLogoutController);
 // admin panel
-router.get('/all-users', authToken ,allUsers)
-router.post('/update-user', authToken, updateUser)
+router.get("/all-users", authToken, allUsers);
+router.post("/update-user", authToken, updateUser);
 //upload product
-router.post('/upload-product', authToken, UploadProductController)
-router.get('/all-product', getAllProductController)
-router.post('/update-product',authToken,updateProductController)
+router.post("/upload-product", authToken, UploadProductController);
+router.get("/all-product", getAllProductController);
+router.post("/update-product", authToken, updateProductController);
 
 // getProducts
-router.get('/get-productsCategory', getCategoryProductController)
-router.post('/get-categorywiseProducts' , getCategoryWiseProductController)
-router.post('/product-details', getProductDetails)
+router.get("/get-productsCategory", getCategoryProductController);
+router.post("/get-categorywiseProducts", getCategoryWiseProductController);
+router.post("/product-details", getProductDetails);
 
-
+// add to card
+router.post("/addtocart", authToken, addToCartProductController);
 export default router;
-
-
-

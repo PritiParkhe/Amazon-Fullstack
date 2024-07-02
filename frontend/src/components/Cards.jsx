@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AllApiUrls from '../services';
 import displayINRCurrency from '../services/displayCurrency';
 import SmallHerosection from './Header/SmallHerosection';
@@ -37,7 +37,10 @@ const Cards = ({ products }) => {
         <div className='flex flex-wrap ml-4 mr-4'>
           {products && products.length > 0 ? (
             products.map((product, index) => (
-              <div key={index} className='w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-2'> 
+              <Link 
+              to={`/product/${product?._id}`}  
+              key={index} 
+              className='w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-2'> 
                 <div className='bg-white rounded-sm shadow p-4 flex flex-col h-full min-h-[350px]'>
                   <div className='bg-white h-48 flex justify-center items-center mb-2'> 
                     <img
@@ -60,7 +63,7 @@ const Cards = ({ products }) => {
                     Add to Cart
                   </button>
                 </div>
-              </div>
+              </Link>
             ))
           ) : (
             <p className='mx-4'>No products available.</p>

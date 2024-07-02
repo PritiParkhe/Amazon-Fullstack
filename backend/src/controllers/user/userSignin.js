@@ -55,11 +55,6 @@ async function userSigninController(req, res) {
       
     }
 
-    
-
-
-
-    
   } catch (error) {
     res.json({
       message: error.message || error,
