@@ -8,6 +8,8 @@ import { FaStar } from "react-icons/fa";
 import { FaStarHalf } from "react-icons/fa";
 import displayINRCurrency from "../services/displayCurrency";
 import VerticalCard from "../components/VerticalCard";
+import fetchCategoryWiseProduct from "../Helper/getCategoryWiseProduct";
+
 
 const ProductDetails = () => {
   const [data, setData] = useState({
@@ -85,6 +87,25 @@ const ProductDetails = () => {
   const handleZoomOutImage = () => {
     setZoomImage(false);
   };
+
+  const [airpodesProducts, setAirpodesProducts] = useState([]);
+  const [mobileProducts, setMobileProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const airpodesResponse = await fetchCategoryWiseProduct('airpodes');
+        setAirpodesProducts(airpodesResponse.data);
+        
+        const mobileResponse = await fetchCategoryWiseProduct('mobiles');
+        setMobileProducts(mobileResponse.data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -193,7 +214,8 @@ const ProductDetails = () => {
             
           </div>
         </div>
-        
+        <VerticalCard products={mobileProducts} heading={"Latest in mobile"}/>
+
       </div>
       <Footer />
     </>
