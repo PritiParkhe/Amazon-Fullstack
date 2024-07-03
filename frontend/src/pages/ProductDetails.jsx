@@ -8,7 +8,7 @@ import { FaStar, FaStarHalf } from "react-icons/fa";
 import displayINRCurrency from "../services/displayCurrency";
 import VerticalCard from "../components/VerticalCard";
 import fetchCategoryWiseProduct from "../Helper/getCategoryWiseProduct";
-import addToCart from '../Helper/addToCard.js'; // Fix import
+import addToCart from '../Helper/addToCard.js'; 
 
 const ProductDetails = () => {
   const [data, setData] = useState({
@@ -87,15 +87,12 @@ const ProductDetails = () => {
     setZoomImage(false);
   };
 
-  const [airpodesProducts, setAirpodesProducts] = useState([]);
   const [mobileProducts, setMobileProducts] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const airpodesResponse = await fetchCategoryWiseProduct('airpodes');
-        setAirpodesProducts(airpodesResponse.data);
-        
+      try {        
+
         const mobileResponse = await fetchCategoryWiseProduct('mobiles');
         setMobileProducts(mobileResponse.data);
       } catch (error) {
@@ -108,7 +105,6 @@ const ProductDetails = () => {
 
   const handleAddToCart = async (e, id) => {
     await addToCart(e, id); // Pass the event object correctly
-    console.log(`Adding product with ID ${id} to cart`);
   };
 
   return (

@@ -2,7 +2,6 @@ import AllApiUrls from "../services"
 import { toast } from 'react-toastify';
 
 const addToCard = async (e, id) => {
-  // Ensure e is an event object before calling stopPropagation and preventDefault
   if (e) {
     e.stopPropagation();
     e.preventDefault();
@@ -20,10 +19,11 @@ const addToCard = async (e, id) => {
       })
     });
     
-    const responseData = await response.json(); // Ensure responseData is awaited
+    const responseData = await response.json(); 
 
-    if (response.ok) { // Check response.ok instead of responseData.ok
+    if (response.ok) { 
       toast.success(responseData.message);
+      console.log(id);
     } else if (responseData.error) {
       toast.error(responseData.message);
     }

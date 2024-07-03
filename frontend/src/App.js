@@ -1,45 +1,65 @@
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
-// import Header from "./components/Header/Header";
-// import Footer from "./components/Footer/Footer";
-import { ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import AllApiUrls from "./services";
 import Context from "./context";
 import { useDispatch } from "react-redux";
 import { setUserDetails } from "./stores/userSlice";
 
 export default function App() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const fetchUserInfo = async()=>{
-    const response = await fetch (AllApiUrls.user.url,{
-      method : AllApiUrls.user.method,
-      credentials : 'include'
-    })
-    const dataResponse =  await response.json()
+  const fetchUserInfo = async () => {
+    try {
+      const response = await fetch(AllApiUrls.user.url, {
+        method: AllApiUrls.user.method,
+        credentials: "include",
+      });
+      const dataResponse = await response.json();
 
-    if(dataResponse.success){
-      dispatch(setUserDetails(dataResponse.data))
+      if (dataResponse.success) {
+        dispatch(setUserDetails(dataResponse.data));
+      }
+    } catch (error) {
+      console.error("Error fetching user info:", error);
     }
+  };
 
-    
-  }
-  useEffect(()=>{
-    /* user Information*/
-    fetchUserInfo()
-    })
+  const fetchUserAddToCart = async () => {
+    try {
+      const response = await fetch(AllApiUrls.countCartProduct.url, {
+        method: AllApiUrls.countCartProduct.method,
+        credentials: "include",
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+      const responseData = await response.json();
+      console.log(responseData, "responseData");
+      if (responseData.success) {
+        dispatch(setUserDetails(responseData.data));
+      }
+    } catch (error) {
+      console.error("Error fetching user cart details:", error);
+    }
+  };
+
+  useEffect(() => {
+    /* Fetch user information */
+    fetchUserInfo();
+    /* Fetch user product cart details */
+    fetchUserAddToCart();
+  }, [fetchUserAddToCart]);
+
   return (
     <>
-      <Context.Provider value={{
-        fetchUserInfo // userInfo feching
-      }}>
-      <ToastContainer />
-      <main>
-      <Outlet/>
-      </main>
+      <Context.Provider value={{ fetchUserInfo }}>
+        <ToastContainer />
+        <main>
+          <Outlet />
+        </main>
       </Context.Provider>
-      
     </>
-  )
+  );
 }

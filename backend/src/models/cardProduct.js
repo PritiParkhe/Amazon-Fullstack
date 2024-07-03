@@ -1,20 +1,20 @@
 import mongoose from "mongoose";
 
 const addTocartProductSchema = new mongoose.Schema({
-  productId :{
-    type: String
+  productId: {
+    type: String,
+    required: true,
   },
   quantity: {
-    type: Number
+    type: Number,
+    required: true,
   },
   userId: {
-    type: String
-  }
+    type: String,
+    required: true,
+  },
+}, { timestamps: true });
 
-},{ timestamps: true }
-);
-
-// Create the Product model using the schema
-const addTocartProductModel = mongoose.model("addToCardProduct", addTocartProductSchema);
+const addTocartProductModel = mongoose.model("addToCartProduct", addTocartProductSchema);
 
 export default addTocartProductModel;

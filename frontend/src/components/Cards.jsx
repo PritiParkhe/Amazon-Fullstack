@@ -26,8 +26,6 @@ const Cards = ({ products }) => {
   const handleAddToCart = async (e, id) => {
     // Pass the event object to addToCard
     await addToCard(e, id);
-    console.log(`Adding product with ID ${id} to cart`);
-
     
   };
 
