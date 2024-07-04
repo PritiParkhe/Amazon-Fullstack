@@ -39,5 +39,6 @@ router.post("/product-details", getProductDetails);
 // add to card
 router.post("/addtocart", authToken, addToCartProductController);
 router.get("/countCartProduct", authToken, countAddToProductController);
-router.get("/view-cart-product", authToken, viewCartProductsController)
+router.get("/view-cart-product", authToken, viewCartProductsController);
+router.post("/update-cart-product", authToken, updateProductController);
 export default router;

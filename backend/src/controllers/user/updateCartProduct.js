@@ -47,43 +47,46 @@ function Cart() {
     }
   };
 
-  
+  const fetchUpdateCartProduct = async (id, qty) => {
+    try {
+      const response = await fetch(AllApiUrls.updateCartProducts.url, {
+        method: AllApiUrls.updateCartProducts.method,
+        credentials: 'include',
+        headers: {
+          "content-type": 'application/json'
+        },
+        body: JSON.stringify({
+          _id: id,
+          quantity: qty
+        })
+      });
 
-  const fetchUpdateCartProduct = async (id, qty) =>{
-    const response = await fetch(AllApiUrls.updateCartProducts.url,{
-      method: AllApiUrls.updateCartProducts.method,
-      credentials : 'include',
-      headers: {
-        "content-type" : 'application/json'
-      },
-      body: JSON.stringify(
-        {
-          quantity : qty+1
-        }
-      )
-    })
-    const responseData = await response.json()
-    if(responseData.sucess){
-      setData(responseData.data)
+      const responseData = await response.json();
+      if (responseData.success) {
+        fetchCartProducts(); // Re-fetch cart products to update the UI
+      } else {
+        setError("Failed to update cart product");
+      }
+    } catch (error) {
+      setError("An error occurred while updating cart product");
     }
+  };
 
-  }
   useEffect(() => {
     fetchCartProducts();
-    fetchUpdateCartProduct();
   }, []);
+
   const handleDelete = (productId) => {
     setData(data.filter(product => product.productId._id !== productId));
+    fetchUpdateCartProduct(productId);
   };
 
   const handleQuantityChange = (productId, amount) => {
-    setData(data.map(product => {
-      if (product.productId._id === productId) {
-        const newQuantity = product.quantity + amount;
-        return { ...product, quantity: newQuantity > 0 ? newQuantity : 1 };
-      }
-      return product;
-    }));
+    const product = data.find(p => p.productId._id === productId);
+    const newQuantity = product.quantity + amount;
+    if (newQuantity > 0) {
+      fetchUpdateCartProduct(productId, newQuantity);
+    }
   };
 
   return (
@@ -110,7 +113,6 @@ function Cart() {
                 </a>
                 , learn about today's deals, or visit your Wish List.
               </p>
-              
             </div>
           ) : (
             <div className="flex flex-col lg:flex-row mt-3 ">
@@ -149,7 +151,7 @@ function Cart() {
                             >
                               -
                             </button>
-                            <span>{product?.quantity}</span>
+                            <span>{product.quantity}</span>
                             <button 
                               className="border hover:border-black w-6 h-6"
                               onClick={() => handleQuantityChange(product.productId._id, 1)}
@@ -164,9 +166,9 @@ function Cart() {
                             </button>
                             <button
                               className="ml-4 text-[#007185]"
-                              onClick={() => handleDelete(product.productId._id)}
+                              onClick={() => setShowMore(!showMore)}
                             >
-                              See more items 
+                              See more items
                             </button>
                           </div>
                         </div>
