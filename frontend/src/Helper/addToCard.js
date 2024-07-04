@@ -20,6 +20,7 @@ const addToCard = async (e, id) => {
     });
     
     const responseData = await response.json(); 
+    
 
     if (response.ok) { 
       toast.success(responseData.message);
@@ -27,7 +28,7 @@ const addToCard = async (e, id) => {
     } else if (responseData.error) {
       toast.error(responseData.message);
     }
-
+    return responseData;
   } catch (error) {
     console.error("Error add to cart product:", error);
     toast.error("Error add to");

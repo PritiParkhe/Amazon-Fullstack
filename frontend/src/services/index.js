@@ -57,6 +57,9 @@ const AllApiUrls = {
     url: `${backendDomain}/api/countCartProduct`,
     method: "get",
   },
-
+  viewCartProducts: {
+    url: `${backendDomain}/api/view-cart-product`,
+    method: "get",
+  },
 }
 export default AllApiUrls;

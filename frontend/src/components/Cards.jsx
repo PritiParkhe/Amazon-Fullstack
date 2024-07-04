@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import AllApiUrls from '../services';
 import displayINRCurrency from '../services/displayCurrency';
 import SmallHerosection from './Header/SmallHerosection';
 import addToCard from '../Helper/addToCard.js';
+import Context from "../context";
 
 const Cards = ({ products }) => {
   const [categoryProducts, setCategoryProducts] = useState([]);
+  const { fetchUserAddToCart } = useContext(Context)
+
   
 
   useEffect(() => {
@@ -26,6 +29,8 @@ const Cards = ({ products }) => {
   const handleAddToCart = async (e, id) => {
     // Pass the event object to addToCard
     await addToCard(e, id);
+    fetchUserAddToCart();
+
     
   };
 

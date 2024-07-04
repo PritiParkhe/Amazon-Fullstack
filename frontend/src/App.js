@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -9,6 +9,7 @@ import { setUserDetails } from "./stores/userSlice";
 
 export default function App() {
   const dispatch = useDispatch();
+  const [countCartProduct, setCountCartProduct] = useState(0);
 
   const fetchUserInfo = async () => {
     try {
@@ -37,8 +38,9 @@ export default function App() {
       });
       const responseData = await response.json();
       console.log(responseData, "responseData");
+      setCountCartProduct(responseData.data.count)
       if (responseData.success) {
-        dispatch(setUserDetails(responseData.data));
+        dispatch(setUserDetails(responseData.data?.count));
       }
     } catch (error) {
       console.error("Error fetching user cart details:", error);
@@ -54,7 +56,10 @@ export default function App() {
 
   return (
     <>
-      <Context.Provider value={{ fetchUserInfo }}>
+      <Context.Provider value={{ fetchUserInfo,
+        countCartProduct, // add to cat product function
+        fetchUserAddToCart
+       }}>
         <ToastContainer />
         <main>
           <Outlet />

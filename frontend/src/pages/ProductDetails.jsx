@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useContext } from "react";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import { useParams } from "react-router-dom";
@@ -9,8 +9,12 @@ import displayINRCurrency from "../services/displayCurrency";
 import VerticalCard from "../components/VerticalCard";
 import fetchCategoryWiseProduct from "../Helper/getCategoryWiseProduct";
 import addToCart from '../Helper/addToCard.js'; 
+import Context from "../context";
+
 
 const ProductDetails = () => {
+  const { fetchUserAddToCart } = useContext(Context)
+  const [mobileProducts, setMobileProducts] = useState([]);
   const [data, setData] = useState({
     title: "",
     brandName: "",
@@ -87,8 +91,6 @@ const ProductDetails = () => {
     setZoomImage(false);
   };
 
-  const [mobileProducts, setMobileProducts] = useState([]);
-
   useEffect(() => {
     const fetchData = async () => {
       try {        
@@ -104,7 +106,8 @@ const ProductDetails = () => {
   }, []);
 
   const handleAddToCart = async (e, id) => {
-    await addToCart(e, id); // Pass the event object correctly
+    await addToCart(e, id); 
+    fetchUserAddToCart()
   };
 
   return (

@@ -15,7 +15,7 @@ function Login() {
     password: ""
   });
   const navigate = useNavigate()
-  const {fetchUserInfo} = useContext(Context)
+  const {fetchUserInfo, fetchUserAddToCart} = useContext(Context)
   
 
   const handleOnChange = (e) => {
@@ -52,6 +52,7 @@ function Login() {
         toast.success(data.message);
         navigate('/');
         fetchUserInfo()
+        fetchUserAddToCart()
       } else if (data.error) {
         toast.error(data.message);
       }
