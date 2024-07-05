@@ -71,7 +71,7 @@ function Cart() {
 
   const decreaseQty = async (id, qty) => {
     try {
-      if (qty > 1) {
+      if (qty > 2) {
         const response = await fetch(AllApiUrls.updateCartProducts.url, {
           method: AllApiUrls.updateCartProducts.method,
           credentials: 'include',
@@ -183,14 +183,14 @@ function Cart() {
                           <div className="flex items-center gap-3 mt-2">
                             <button
                               className="border hover:border-black w-6 h-6"
-                              onClick={() => decreaseQty(product._id, product.quantity)}
+                              onClick={() => decreaseQty(product?._id, product?.quantity)}
                             >
                               -
                             </button>
                             <span>{product?.quantity}</span>
                             <button
                               className="border hover:border-black w-6 h-6"
-                              onClick={() => increaseQty(product._id, product.quantity)}
+                              onClick={() => increaseQty(product?._id, product?.quantity)}
                             >
                               +
                             </button>
