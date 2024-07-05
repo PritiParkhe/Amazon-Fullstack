@@ -37,7 +37,6 @@ export default function App() {
         },
       });
       const responseData = await response.json();
-      console.log(responseData, "responseData");
       setCountCartProduct(responseData.data.count)
       if (responseData.success) {
         dispatch(setUserDetails(responseData.data?.count));

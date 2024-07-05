@@ -1,49 +1,48 @@
-const backendDomain ='http://localhost:8000'
+const backendDomain = "http://localhost:8000";
 const AllApiUrls = {
-  signUp:{
+  signUp: {
     url: `${backendDomain}/api/signup`,
-    method: "post"
+    method: "post",
   },
   signIn: {
     url: `${backendDomain}/api/signin`,
-    method: "post"
+    method: "post",
   },
   user: {
-    url : `${backendDomain}/api/user`,
-    method : "get",
-
+    url: `${backendDomain}/api/user`,
+    method: "get",
   },
-  logout:{
-    url : `${backendDomain}/api/logout`,
-    method : "get"
+  logout: {
+    url: `${backendDomain}/api/logout`,
+    method: "get",
   },
-  allUser : {
-    url : `${backendDomain}/api/all-users`,
-    method : "get"
+  allUser: {
+    url: `${backendDomain}/api/all-users`,
+    method: "get",
   },
-  updateUser : {
-    url : `${backendDomain}/api/update-user`,
-    method : "post"
+  updateUser: {
+    url: `${backendDomain}/api/update-user`,
+    method: "post",
   },
-  uploadProduct : {
-    url : `${backendDomain}/api/upload-product`,
-    method : "post"
+  uploadProduct: {
+    url: `${backendDomain}/api/upload-product`,
+    method: "post",
   },
-  allProduct : {
-    url : `${backendDomain}/api/all-product`,
-    method : "get"
+  allProduct: {
+    url: `${backendDomain}/api/all-product`,
+    method: "get",
   },
-  updateProduct : {
-    url : `${backendDomain}/api/update-product`,
-    method : "post"
+  updateProduct: {
+    url: `${backendDomain}/api/update-product`,
+    method: "post",
   },
-  getCategoryProduct : {
-    url : `${backendDomain}/api/get-productsCategory`,
-    method : "get"
+  getCategoryProduct: {
+    url: `${backendDomain}/api/get-productsCategory`,
+    method: "get",
   },
-  getCategoryWiseProduct : {
-    url : `${backendDomain}/api/get-categorywiseProducts`,
-    method : "post"
+  getCategoryWiseProduct: {
+    url: `${backendDomain}/api/get-categorywiseProducts`,
+    method: "post",
   },
   getProductDetails: {
     url: `${backendDomain}/api/product-details`,
@@ -63,7 +62,11 @@ const AllApiUrls = {
   },
   updateCartProducts: {
     url: `${backendDomain}/api/update-cart-product`,
-    method: "post",
+    method: "put",
   },
-}
+  deleteCartProducts: {
+    url: `${backendDomain}/api/delete-cart-product`,
+    method: "delete",
+  },
+};
 export default AllApiUrls;

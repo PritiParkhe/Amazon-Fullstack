@@ -13,7 +13,6 @@ const Header = () => {
   const [menuDisplay, setMenuDisplay] = useState(false);
   const context = useContext(Context);
 
-  console.log(context, "context");
   return (
     <header>
       <nav

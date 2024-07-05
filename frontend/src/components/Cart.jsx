@@ -25,7 +25,6 @@ function Cart() {
       const responseData = await response.json();
 
       if (responseData.success) {
-        // Combine products with the same productId
         const mergedData = responseData.data.reduce((acc, product) => {
           const existingProduct = acc.find(p => p.productId._id === product.productId._id);
           if (existingProduct) {
@@ -35,7 +34,6 @@ function Cart() {
           }
           return acc;
         }, []);
-
         setData(mergedData);
       } else {
         setError("Failed to fetch cart products");
@@ -47,44 +45,85 @@ function Cart() {
     }
   };
 
-  
-
-  const fetchUpdateCartProduct = async (id, qty) =>{
-    const response = await fetch(AllApiUrls.updateCartProducts.url,{
-      method: AllApiUrls.updateCartProducts.method,
-      credentials : 'include',
-      headers: {
-        "content-type" : 'application/json'
-      },
-      body: JSON.stringify(
-        {
-          quantity : qty+1
-        }
-      )
-    })
-    const responseData = await response.json()
-    if(responseData.sucess){
-      setData(responseData.data)
+  const increaseQty = async (id, qty) => {
+    try {
+      const response = await fetch(AllApiUrls.updateCartProducts.url, {
+        method: AllApiUrls.updateCartProducts.method,
+        credentials: 'include',
+        headers: {
+          "content-type": 'application/json'
+        },
+        body: JSON.stringify({
+          _id: id,
+          quantity: qty + 1
+        })
+      });
+      const responseData = await response.json();
+      if (responseData.success) {
+        fetchCartProducts();
+      } else {
+        console.error("Failed to increase quantity:", responseData.message);
+      }
+    } catch (error) {
+      console.error("An error occurred while increasing quantity:", error);
     }
+  };
 
-  }
+  const decreaseQty = async (id, qty) => {
+    try {
+      if (qty > 1) {
+        const response = await fetch(AllApiUrls.updateCartProducts.url, {
+          method: AllApiUrls.updateCartProducts.method,
+          credentials: 'include',
+          headers: {
+            "content-type": 'application/json'
+          },
+          body: JSON.stringify({
+            _id: id,
+            quantity: qty - 1
+          })
+        });
+        const responseData = await response.json();
+        if (responseData.success) {
+          fetchCartProducts();
+        } else {
+          console.error("Failed to decrease quantity:", responseData.message);
+        }
+      }
+    } catch (error) {
+      console.error("An error occurred while decreasing quantity:", error);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch(AllApiUrls.deleteCartProducts.url, {
+        method: AllApiUrls.deleteCartProducts.method,
+        credentials: 'include',
+        headers: {
+          "content-type": 'application/json'
+        },
+        body: JSON.stringify({
+          _id: id
+        })
+      });
+      const responseData = await response.json();
+      if (responseData.success) {
+        fetchCartProducts();
+      } else {
+        console.error("Failed to delete product:", responseData.message);
+      }
+    } catch (error) {
+      console.error("An error occurred while deleting product:", error);
+    }
+  };
+
   useEffect(() => {
     fetchCartProducts();
-    fetchUpdateCartProduct();
   }, []);
-  const handleDelete = (productId) => {
-    setData(data.filter(product => product.productId._id !== productId));
-  };
 
-  const handleQuantityChange = (productId, amount) => {
-    setData(data.map(product => {
-      if (product.productId._id === productId) {
-        const newQuantity = product.quantity + amount;
-        return { ...product, quantity: newQuantity > 0 ? newQuantity : 1 };
-      }
-      return product;
-    }));
-  };
+  const totalQty = data.reduce((previousValue, currentValue) => previousValue + currentValue.quantity, 0);
+  const totalPrice = data.reduce((preve, curr) => preve + (curr.quantity * curr?.productId?.sellingPrice), 0);
 
   return (
     <>
@@ -110,7 +149,6 @@ function Cart() {
                 </a>
                 , learn about today's deals, or visit your Wish List.
               </p>
-              
             </div>
           ) : (
             <div className="flex flex-col lg:flex-row mt-3 ">
@@ -143,30 +181,24 @@ function Cart() {
                             {displayINRCurrency(product.productId.sellingPrice)}
                           </p>
                           <div className="flex items-center gap-3 mt-2">
-                            <button 
+                            <button
                               className="border hover:border-black w-6 h-6"
-                              onClick={() => handleQuantityChange(product.productId._id, -1)}
+                              onClick={() => decreaseQty(product._id, product.quantity)}
                             >
                               -
                             </button>
                             <span>{product?.quantity}</span>
-                            <button 
+                            <button
                               className="border hover:border-black w-6 h-6"
-                              onClick={() => handleQuantityChange(product.productId._id, 1)}
+                              onClick={() => increaseQty(product._id, product.quantity)}
                             >
                               +
                             </button>
                             <button
                               className="ml-4 text-[#007185]"
-                              onClick={() => handleDelete(product.productId._id)}
+                              onClick={() => handleDelete(product._id)}
                             >
                               Delete
-                            </button>
-                            <button
-                              className="ml-4 text-[#007185]"
-                              onClick={() => handleDelete(product.productId._id)}
-                            >
-                              See more items 
                             </button>
                           </div>
                         </div>
@@ -188,13 +220,7 @@ function Cart() {
                   <p className="text-lg">
                     <strong>
                       Subtotal:{" "}
-                      {displayINRCurrency(
-                        data.reduce(
-                          (acc, product) =>
-                            acc + product.productId.sellingPrice * product.quantity,
-                          0
-                        )
-                      )}
+                      {displayINRCurrency(totalPrice)}
                     </strong>
                   </p>
                   <div className="flex items-center mt-2">
