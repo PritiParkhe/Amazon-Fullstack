@@ -4,7 +4,7 @@ const addTocartProductSchema = new mongoose.Schema(
   {
     productId: {
       ref: "Product",
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
     },
     quantity: {
@@ -12,7 +12,8 @@ const addTocartProductSchema = new mongoose.Schema(
       required: true,
     },
     userId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
   },

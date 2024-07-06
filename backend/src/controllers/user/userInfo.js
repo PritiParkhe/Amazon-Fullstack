@@ -2,7 +2,7 @@ import userModel from "../../models/userModel.js"; // Ensure this matches the ex
 
 export async function userInfoController(req, res) {
   try {
-    console.log("user id ", req.userId);
+    // console.log("user id ", req.userId);
     const user = await userModel.findById(req.userId);
     res.status(200).json({
       message: "User found",

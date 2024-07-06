@@ -2,15 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import Header from "./Header/Header";
 import SmallHerosection from "./Header/SmallHerosection";
 import AllApiUrls from "../services";
-import Context from "../context";
 import displayINRCurrency from "../services/displayCurrency";
+import Context from "../context";
 
 function Cart() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showMore, setShowMore] = useState(false);
-
   const context = useContext(Context);
 
   const fetchCartProducts = async () => {
@@ -23,10 +21,13 @@ function Cart() {
         },
       });
       const responseData = await response.json();
+      console.log("Fetched cart products:", responseData);
 
       if (responseData.success) {
         const mergedData = responseData.data.reduce((acc, product) => {
-          const existingProduct = acc.find(p => p.productId._id === product.productId._id);
+          const existingProduct = acc.find(
+            (p) => p.productId._id === product.productId._id
+          );
           if (existingProduct) {
             existingProduct.quantity += product.quantity;
           } else {
@@ -45,76 +46,87 @@ function Cart() {
     }
   };
 
-  const increaseQty = async (id, qty) => {
+  const updateCartProduct = async (productId, quantity) => {
     try {
       const response = await fetch(AllApiUrls.updateCartProducts.url, {
         method: AllApiUrls.updateCartProducts.method,
-        credentials: 'include',
+        credentials: "include",
         headers: {
-          "content-type": 'application/json'
+          "content-type": "application/json",
         },
         body: JSON.stringify({
-          _id: id,
-          quantity: qty + 1
-        })
+          _id: productId,
+          quantity: quantity,
+        }),
       });
       const responseData = await response.json();
+      console.log("Update response:", responseData);
       if (responseData.success) {
-        fetchCartProducts();
-      } else {
-        console.error("Failed to increase quantity:", responseData.message);
-      }
-    } catch (error) {
-      console.error("An error occurred while increasing quantity:", error);
-    }
-  };
-
-  const decreaseQty = async (id, qty) => {
-    try {
-      if (qty > 2) {
-        const response = await fetch(AllApiUrls.updateCartProducts.url, {
-          method: AllApiUrls.updateCartProducts.method,
-          credentials: 'include',
-          headers: {
-            "content-type": 'application/json'
-          },
-          body: JSON.stringify({
-            _id: id,
-            quantity: qty - 1
-          })
+        // Update the specific product in data state
+        const updatedData = data.map((item) => {
+          if (item._id === productId) {
+            return {
+              ...item,
+              quantity: responseData.data?.quantity || quantity, // Use responseData.data.quantity if available, otherwise use current quantity
+            };
+          }
+          return item;
         });
-        const responseData = await response.json();
-        if (responseData.success) {
-          fetchCartProducts();
-        } else {
-          console.error("Failed to decrease quantity:", responseData.message);
-        }
+        setData(updatedData);
+      } else {
+        console.error("Failed to update quantity:", responseData.message);
       }
     } catch (error) {
-      console.error("An error occurred while decreasing quantity:", error);
+      console.error("An error occurred while updating quantity:", error);
     }
   };
 
-  const handleDelete = async (id) => {
+  const increaseQty = (productId, qty) => {
+    console.log(
+      "Increasing quantity for product:",
+      productId,
+      "current quantity:",
+      qty
+    );
+    updateCartProduct(productId, qty + 1);
+  };
+
+  const decreaseQty = (productId, qty) => {
+    console.log(
+      "Decreasing quantity for product:",
+      productId,
+      "current quantity:",
+      qty
+    );
+    if (qty > 1) {
+      updateCartProduct(productId, qty - 1);
+    }
+  };
+
+  const handleDelete = async (productId) => {
+    console.log("Deleting product:", productId);
     try {
       const response = await fetch(AllApiUrls.deleteCartProducts.url, {
         method: AllApiUrls.deleteCartProducts.method,
-        credentials: 'include',
+        credentials: "include",
         headers: {
-          "content-type": 'application/json'
+          "content-type": "application/json",
         },
         body: JSON.stringify({
-          _id: id
-        })
+          _id: productId,
+        }),
       });
       const responseData = await response.json();
+      console.log("Delete response:", responseData);
       if (responseData.success) {
         fetchCartProducts();
       } else {
         console.error("Failed to delete product:", responseData.message);
+        setError("Failed to delete product");
       }
     } catch (error) {
       console.error("An error occurred while deleting product:", error);
+      setError("An error occurred while deleting product");
     }
   };
 
@@ -122,8 +134,14 @@ function Cart() {
     fetchCartProducts();
   }, []);
 
-  const totalQty = data.reduce((previousValue, currentValue) => previousValue + currentValue.quantity, 0);
-  const totalPrice = data.reduce((preve, curr) => preve + (curr.quantity * curr?.productId?.sellingPrice), 0);
+  const totalQty = data.reduce(
+    (previousValue, currentValue) => previousValue + currentValue.quantity,
+    0
+  );
+  const totalPrice = data.reduce(
+    (prev, curr) => prev + curr.quantity * curr?.productId?.sellingPrice,
+    0
+  );
 
   return (
     <>
@@ -157,9 +175,9 @@ function Cart() {
                   <h2 className="font-medium border-b border-gray-300 pb-4">
                     Shopping Cart
                   </h2>
-                  {data.slice(0, showMore ? data.length : 5).map((product, index) => (
+                  {data.map((product, index) => (
                     <div
-                      key={product.id || index}
+                      key={product._id || index}
                       className="flex flex-col lg:flex-row p-1 mt-1 border-b border-gray-200"
                     >
                       <div className="flex items-center mt-4 mb-6">
@@ -183,55 +201,50 @@ function Cart() {
                           <div className="flex items-center gap-3 mt-2">
                             <button
                               className="border hover:border-black w-6 h-6"
-                              onClick={() => decreaseQty(product?._id, product?.quantity)}
+                              onClick={() =>
+                                decreaseQty(product._id, product.quantity)
+                              }
                             >
                               -
                             </button>
                             <span>{product?.quantity}</span>
                             <button
                               className="border hover:border-black w-6 h-6"
-                              onClick={() => increaseQty(product?._id, product?.quantity)}
+                              onClick={() =>
+                                increaseQty(product._id, product.quantity)
+                              }
                             >
                               +
                             </button>
-                            <button
-                              className="ml-4 text-[#007185]"
-                              onClick={() => handleDelete(product._id)}
-                            >
-                              Delete
-                            </button>
+                            <div className="flex items-center">
+                              <button
+                                className="ml-4 text-[#007185] text-sm "
+                                onClick={() => handleDelete(product._id)}
+                              >
+                                Delete <span className="ml-2"> |</span>
+                              </button>
+                              <button className="ml-2 text-[#007185] text-sm">
+                                See More
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   ))}
-                  {data.length > 5 && (
-                    <button
-                      onClick={() => setShowMore(!showMore)}
-                      className="mt-4 text-blue-500"
-                    >
-                      {showMore ? "See Less" : "See More"}
-                    </button>
-                  )}
                 </div>
               </div>
               <div className="bg-white p-4 lg:ml-4 flex flex-col items-center justify-center h-48 lg:flex-none lg:w-1/4">
                 <>
                   <p className="text-lg">
-                    <strong>
-                      Subtotal:{" "}
-                      {displayINRCurrency(totalPrice)}
-                    </strong>
+                    <strong>Subtotal: {displayINRCurrency(totalPrice)}</strong>
                   </p>
                   <div className="flex items-center mt-2">
                     <input type="checkbox" />
                     <span className="ml-2">This order contains a gift.</span>
                   </div>
                 </>
-                <button
-                  // onClick={() => navigate("/address")}
-                  className="w-3/4 mt-4 bg-yellow-400 py-2 rounded-lg"
-                >
+                <button className="w-3/4 mt-4 bg-yellow-400 py-2 rounded-lg">
                   Proceed To Checkout
                 </button>
               </div>

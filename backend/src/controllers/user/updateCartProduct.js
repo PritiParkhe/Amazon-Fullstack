@@ -1,29 +1,35 @@
-import addToCartProductModel from "../../models/cartProduct.js";
-
 const updateProductController = async (req, res) => {
   try {
     const currentUserId = req.userId;
-    const addToCartProductId = req.body._id;
-    const qty = req.body.quantity;
+    const { _id, quantity } = req.body;
 
-    const updateProduct = await addToCartProductModel.updateOne(
-      { _id: addToCartProductId },
-      { quantity: qty }
+    // Update query
+    const updateProduct = await addToCartProductModel.findOneAndUpdate(
+      { _id, userId: currentUserId },
+      { $set: { quantity } },
+      { new: true } // Ensure we get the updated document back
     );
 
+    if (!updateProduct) {
+      return res.status(400).json({
+        message: "Failed to update product quantity",
+        error: true,
+        success: false,
+      });
+    }
+
     res.json({
-      message: "Product Updated",
-      data: updateProduct,
+      message: "Product updated successfully",
+      data: updateProduct, // Return updated product data
       error: false,
       success: true,
     });
   } catch (err) {
-    res.json({
+    console.error("Error updating product:", err);
+    res.status(500).json({
       message: err?.message || err,
       error: true,
       success: false,
     });
   }
 };
-
-export { updateProductController };
