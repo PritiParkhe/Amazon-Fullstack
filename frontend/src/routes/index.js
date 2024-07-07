@@ -13,7 +13,6 @@ import CategoryCardsList from "../pages/CategoryCardsList";
 import Cart from "../components/Cart";
 import SearchProduct from "../pages/SearchProduct";
 import CategoryProducts from "../components/CategoryProducts";
-import VerticalCard from "../components/VerticalCard";
 
 const router = createBrowserRouter([
   {

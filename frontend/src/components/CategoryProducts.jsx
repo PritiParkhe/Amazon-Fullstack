@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import productCategory from "../Helper/ProductCategory";
 import VerticalCard from "../components/VerticalCard";
 import AllApiUrls from "../services";
 
 const CategoryProducts = () => {
-  const params = useParams();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [visibleCategories, setVisibleCategories] = useState({});
@@ -18,10 +16,6 @@ const CategoryProducts = () => {
     );
     setFilterCategoryList(selectedCategories);
   }, [selectCategory]);
-
-  useEffect(() => {
-    fetchData();
-  }, [filterCategoryList]);
 
   const fetchData = async () => {
     setLoading(true);
@@ -43,6 +37,9 @@ const CategoryProducts = () => {
     }
   };
 
+  useEffect(() => {
+    fetchData();
+  }, [filterCategoryList]);
   const handleCategoryChange = (categoryTitle) => {
     setVisibleCategories((prevState) => ({
       ...prevState,
@@ -103,7 +100,10 @@ const CategoryProducts = () => {
                   {visibleCategories[category.title] && (
                     <div className="ml-4">
                       {category.options.map((option) => (
-                        <div key={option.id} className="flex items-center gap-3">
+                        <div
+                          key={option.id}
+                          className="flex items-center gap-3"
+                        >
                           <input
                             type="checkbox"
                             name={option.label}

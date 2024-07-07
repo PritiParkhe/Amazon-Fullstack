@@ -1,42 +1,23 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import AllApiUrls from '../services';
 import displayINRCurrency from '../services/displayCurrency';
 import SmallHerosection from './Header/SmallHerosection';
-import addToCard from '../Helper/addToCard.js';
+import addToCard from '../Helper/addToCard';
 import Context from "../context";
 
-const Cards = ({ products, }) => {
-  const [categoryProducts, setCategoryProducts] = useState([]);
-  const { fetchUserAddToCart } = useContext(Context)
-
-  
-
-  useEffect(() => {
-    const getAllCategoryProducts = async () => {
-      try {
-        const response = await fetch(AllApiUrls.getCategoryProduct.url);
-        const dataResponse = await response.json();
-        setCategoryProducts(dataResponse.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    getAllCategoryProducts();
-  }, []);
+const Cards = ({ products }) => {
+  const { fetchUserAddToCart } = useContext(Context);
 
   const handleAddToCart = async (e, id) => {
-    // Pass the event object to addToCard
+    e.preventDefault();
     await addToCard(e, id);
     fetchUserAddToCart();
-
-    
   };
 
   return (
     <>
-      <SmallHerosection />
+      
       <div className='container mt-2'>
         <div className='flex flex-wrap ml-4 mr-4'>
           {products && products.length > 0 ? (
