@@ -16,6 +16,7 @@ import { addToCartProductController } from "../controllers/product/addToCartProd
 import { countAddToProductController } from "../controllers/user/countAddToCartProduct.js";
 import { viewCartProductsController } from "../controllers/user/viewCartProducts.js";
 import { deleteCartProduct } from "../controllers/user/deleteCartProduct.js";
+import { searchProductController } from "../controllers/product/searchProduct.js";
 
 export const router = express.Router();
 
@@ -36,6 +37,7 @@ router.post("/update-product", authToken, updateProductController);
 router.get("/get-productsCategory", getCategoryProductController);
 router.post("/get-categorywiseProducts", getCategoryWiseProductController);
 router.post("/product-details", getProductDetails);
+router.get("/search", searchProductController);
 
 // add to card
 router.post("/addtocart", authToken, addToCartProductController);

@@ -68,5 +68,9 @@ const AllApiUrls = {
     url: `${backendDomain}/api/delete-cart-product`,
     method: "delete",
   },
+  searchProduct: {
+    url: `${backendDomain}/api/search`,
+    method: "get",
+  },
 };
 export default AllApiUrls;

@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
+import displayINRCurrency from '../services/displayCurrency';
 import { Link } from 'react-router-dom';
 import AllApiUrls from '../services';
-import displayINRCurrency from '../services/displayCurrency';
-import SmallHerosection from './Header/SmallHerosection';
-import addToCard from '../Helper/addToCard.js';
-import Context from "../context";
+import addToCard from '../Helper/addToCard.js';import Context from "../context";
 
-const Cards = ({ products, }) => {
+
+ const Card = ({ product,data=[] }) => {
   const [categoryProducts, setCategoryProducts] = useState([]);
   const { fetchUserAddToCart } = useContext(Context)
 
@@ -26,6 +25,7 @@ const Cards = ({ products, }) => {
     getAllCategoryProducts();
   }, []);
 
+
   const handleAddToCart = async (e, id) => {
     // Pass the event object to addToCard
     await addToCard(e, id);
@@ -35,21 +35,19 @@ const Cards = ({ products, }) => {
   };
 
   return (
-    <>
-      <SmallHerosection />
-      <div className='container mt-2'>
+    <div className='container mt-2'>
         <div className='flex flex-wrap ml-4 mr-4'>
-          {products && products.length > 0 ? (
-            products.map((product, index) => (
+          {data && data.length > 0 ? (
+            data.map((product, index) => (
               <Link 
-                to={`/product/${product?._id}`}  
-                key={index} 
+                to={`/product/${data?._id}`}  
+                key={data._id} 
                 className='w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-2'> 
                 <div className='bg-white rounded-sm shadow p-4 flex flex-col h-full min-h-[350px]'>
                   <div className='bg-white h-48 flex justify-center items-center mb-2'> 
                     <img
                       src={product.productImage?.[0]}
-                      alt={product.title}
+                      alt={product?.title}
                       className='object-contain h-full hover:scale-110 transition-all mix-blend-multiply'
                     />
                   </div>
@@ -74,8 +72,6 @@ const Cards = ({ products, }) => {
           )}
         </div>
       </div>
-    </>
-  );
-};
-
-export default Cards;
+  )
+}
+export default Card

@@ -4,7 +4,7 @@ import { FaSearch, FaMapMarkerAlt } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Role from "../../services/userRole";
 import Context from "../../context";
 
@@ -12,6 +12,23 @@ const Header = () => {
   const user = useSelector((state) => state?.user?.user);
   const [menuDisplay, setMenuDisplay] = useState(false);
   const context = useContext(Context);
+  const navigate =  useNavigate();
+  const searchInput = useLocation()
+  const [search,setSearch] = useState(searchInput?.search?.split("=")[1])
+  
+  console.log(searchInput?.search.split("=")[1]);
+
+  const handleSearch = (e) => {
+    const { value } = e.target;
+    setSearch(value); 
+    if (value) {
+      navigate(`/search?q=${value}`);
+    } else {
+      navigate("/search");
+    }
+  };
+  
+  
 
   return (
     <header>
@@ -34,10 +51,13 @@ const Header = () => {
             <option value="">All</option>
           </select>
           <input
-            type="text"
-            placeholder="Search"
-            className="w-full  pl-2 h-10"
-          />
+  type="text"
+  placeholder="Search"
+  className="w-full pl-2 h-10 text-black"
+  onChange={handleSearch} 
+  value={search}  // <-- Here
+/>
+
           <div className="text-lg min-w-[35px] h-10 bg-[#febd68] flex items-center justify-center rounded-r-md">
             <FaSearch />
           </div>

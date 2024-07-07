@@ -1,0 +1,32 @@
+import productModel from "../../models/productModel.js";
+
+const searchProductController = async(req, res) => {
+  try {
+    const query = req.query.q
+    const regex = RegExp(query,"i","g")
+    const product = await productModel.find({
+      "$or" : [
+        {
+          title : regex
+        },
+        {
+          subCategory : regex
+        }
+      ]
+    })
+    
+    res.json({
+      data : product,
+      message : "Search product list",
+      error : false,
+      success : true
+    })
+  } catch (error) {
+    res.status(400).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
+export{searchProductController}
