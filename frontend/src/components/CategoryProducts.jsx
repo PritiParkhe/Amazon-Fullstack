@@ -1,20 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import productCategory from "../Helper/ProductCategory";
-import VerticalCard from "../components/VerticalCard"
+import VerticalCard from "../components/VerticalCard";
+import AllApiUrls from "../services";
 
 const CategoryProducts = () => {
   const params = useParams();
-  const [data, setdata] = useState([])
-  const [loading, setLoading] = useState(false)
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [visibleCategories, setVisibleCategories] = useState({});
+  const [selectCategory, setSelectCategory] = useState({});
+  const [filterCategoryList, setFilterCategoryList] = useState([]);
 
-  const fetchData = async() => {
-    const response = await fetch()
-    const responseData = response.json()
-    setdata(responseData?.data || [])
-    console.log(responseData);
-  }
+  useEffect(() => {
+    const selectedCategories = Object.keys(selectCategory).filter(
+      (key) => selectCategory[key]
+    );
+    setFilterCategoryList(selectedCategories);
+  }, [selectCategory]);
+
+  useEffect(() => {
+    fetchData();
+  }, [filterCategoryList]);
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(AllApiUrls.filterProduct.url, {
+        method: AllApiUrls.filterProduct.method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ category: filterCategoryList }),
+      });
+      const responseData = await response.json();
+      setData(responseData?.data || []);
+      console.log(responseData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleCategoryChange = (categoryTitle) => {
     setVisibleCategories((prevState) => ({
@@ -23,13 +50,23 @@ const CategoryProducts = () => {
     }));
   };
 
+  const handleSelectCategory = (e) => {
+    const { value, checked } = e.target;
+    setSelectCategory((prev) => ({
+      ...prev,
+      [value]: checked,
+    }));
+  };
+
+  const handleCheckboxChange = (e, categoryTitle) => {
+    handleCategoryChange(categoryTitle);
+    handleSelectCategory(e);
+  };
+
   return (
     <div className="container mx-auto p-4">
-      {/** dekstopVersion */}
       <div className="hidden lg:grid grid-cols-[200px,1fr]">
-        {/** leftside */}
         <div className="bg-white p-2 min-h-[calc(100vh-120px)] overflow-y-scroll">
-          {/** sortby */}
           <div className="">
             <h3 className="text-base font-medium text-gray-700 border-b pb-1 border-gray-400">
               SORT BY
@@ -45,7 +82,6 @@ const CategoryProducts = () => {
               </div>
             </form>
           </div>
-          {/** filterby */}
           <div className="">
             <h3 className="text-base font-medium text-gray-600 border-b pb-1 border-gray-400">
               FILTER BY
@@ -58,7 +94,9 @@ const CategoryProducts = () => {
                       type="checkbox"
                       name="category"
                       id={category.title}
-                      onChange={() => handleCategoryChange(category.title)}
+                      value={category.title}
+                      checked={selectCategory[category.title] || false}
+                      onChange={(e) => handleCheckboxChange(e, category.title)}
                     />
                     <label htmlFor={category.title}>{category.title}</label>
                   </div>
@@ -70,8 +108,11 @@ const CategoryProducts = () => {
                             type="checkbox"
                             name={option.label}
                             id={option.value}
+                            value={option.value}
+                            checked={selectCategory[option.value] || false}
+                            onChange={handleSelectCategory}
                           />
-                          <label htmlFor={option.value}>{option.value}</label>
+                          <label htmlFor={option.value}>{option.label}</label>
                         </div>
                       ))}
                     </div>
@@ -81,13 +122,14 @@ const CategoryProducts = () => {
             </form>
           </div>
         </div>
-        {/** rightside */}
         <div>
-          {
-            data.length !== 0 && !loading && (
-              <VerticalCard data={data} loading={loading} />
-            )
-          }
+          {loading ? (
+            <p>Loading...</p>
+          ) : data.length > 0 ? (
+            <VerticalCard products={data} heading="Filtered Products" />
+          ) : (
+            <p>No products found.</p>
+          )}
         </div>
       </div>
     </div>
