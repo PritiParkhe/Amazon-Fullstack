@@ -13,6 +13,7 @@ import CategoryCardsList from "../pages/CategoryCardsList";
 import Cart from "../components/Cart";
 import SearchProduct from "../pages/SearchProduct";
 import CategoryProducts from "../components/CategoryProducts";
+import Checkout from "../pages/Checkout";
 
 const router = createBrowserRouter([
   {
@@ -63,7 +64,10 @@ const router = createBrowserRouter([
         path: `/subcategory`,
         element: <CategoryProducts/>
       },
-
+      {
+        path: "/checkout",
+        element: <Checkout />
+      },
       {
         path: "admin-panel",
         element: <AdminPanel />,

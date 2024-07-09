@@ -4,12 +4,16 @@ import SmallHerosection from "./Header/SmallHerosection";
 import AllApiUrls from "../services";
 import displayINRCurrency from "../services/displayCurrency";
 import Context from "../context";
+import { useNavigate } from "react-router-dom";
 
 function Cart() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const context = useContext(Context);
+  const navigate = useNavigate()
+  
+  
 
   const fetchCartProducts = async () => {
     try {
@@ -46,6 +50,9 @@ function Cart() {
     }
   };
 
+  const handleCheckout = () =>{
+    navigate("/checkout")
+  }
   const updateCartProduct = async (productId, quantity) => {
     try {
       const response = await fetch(AllApiUrls.updateCartProducts.url, {
@@ -244,7 +251,10 @@ function Cart() {
                     <span className="ml-2">This order contains a gift.</span>
                   </div>
                 </>
-                <button className="w-3/4 mt-4 bg-yellow-400 py-2 rounded-lg">
+                <button 
+                className="w-3/4 mt-4 bg-yellow-400 py-2 rounded-lg"
+                onClick={handleCheckout}
+                >
                   Proceed To Checkout
                 </button>
               </div>
