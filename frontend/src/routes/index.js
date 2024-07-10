@@ -14,6 +14,7 @@ import Cart from "../components/Cart";
 import SearchProduct from "../pages/SearchProduct";
 import CategoryProducts from "../components/CategoryProducts";
 import Checkout from "../pages/Checkout";
+import Success from "../pages/Success";
 
 const router = createBrowserRouter([
   {
@@ -67,6 +68,10 @@ const router = createBrowserRouter([
       {
         path: "/checkout",
         element: <Checkout />
+      },
+      {
+        path: "/success",
+        element: <Success />
       },
       {
         path: "admin-panel",
