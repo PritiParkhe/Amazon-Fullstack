@@ -24,6 +24,7 @@ app.use(cookieParser());
 
 app.use("/api", router);
 
+
 // Connect to DB and start the server
 connectDB().then(() => {
   app.listen(PORT, () => {
