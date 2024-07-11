@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Header from '../components/Header/Header';
+import Card from '../components/Card'; // Assuming this is where your Card component is defined
 import AllApiUrls from '../services';
-import Cards from '../components/Cards'; // Assuming this is where your Card component is defined
 import fetchCategoryWiseProduct from '../Helper/getCategoryWiseProduct';
 
 const SearchProduct = () => {
   const query = useLocation();
-  const [data, setData] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const SearchProduct = () => {
           method: AllApiUrls.searchProduct.method,
         });
         const responseData = await response.json();
-        setData(responseData.data);
+        setSearchResults(responseData.data);
       } catch (error) {
         console.error('Error fetching products:', error);
       } finally {
@@ -29,17 +29,11 @@ const SearchProduct = () => {
     fetchProduct();
   }, [query]);
 
-  const [airpodsProducts, setAirpodsProducts] = useState([]);
-  const [mobileProducts, setMobileProducts] = useState([]);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const airpodsResponse = await fetchCategoryWiseProduct('airpods');
-        setAirpodsProducts(airpodsResponse.data);
-
-        const mobileResponse = await fetchCategoryWiseProduct('mobiles');
-        setMobileProducts(mobileResponse.data);
+        // Set your category-wise products state here if needed
       } catch (error) {
         console.error('Error fetching category-wise products:', error);
       }
@@ -50,16 +44,14 @@ const SearchProduct = () => {
 
   return (
     <>
-      <Header/>
+      <Header />
       <div className='container mx-auto p-4'>
         {loading && <p className='text-lg text-center'>Loading...</p>}
-        <p>Search Result: {data.length}</p>
-        {!loading && data.length === 0 && (
+        <p>Search Result: {searchResults.length}</p>
+        {!loading && searchResults.length === 0 && (
           <p className='bg-white text-lg text-center p-4'>Not found..</p>
         )}
-        {!loading && data.length > 0 && (
-          <Cards products={data} />
-        )}
+        {!loading && searchResults.length > 0 && <Card products={searchResults} />}
       </div>
     </>
   );
