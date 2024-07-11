@@ -14,7 +14,7 @@ const CategoryProductsList = ({ categoryData }) => {
         {categoryData.map((category, index) => (
           <Link
             key={index}
-            to={`/product`}
+            to={`/category/${category.heading.toLowerCase()}`} // Pass category heading as URL parameter
             className='h-[420px] w-[24%] bg-white p-4 rounded shadow-md'
           >
             <div>
