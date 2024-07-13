@@ -1,10 +1,12 @@
 import { stripe } from "../../config/stripe.js";
 import orderModel from "../../models/orderProductModel.js";
+import addTocartProductModel from "../../models/cartProduct.js";
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRETE_KEY;
 
-async function getLineItem(lineItems) {
+async function getLineItems(lineItems) {
   let ProductItems = [];
+
   if (lineItems?.data?.length) {
     for (const item of lineItems.data) {
       const product = await stripe.products.retrieve(item.price.product);
@@ -15,12 +17,12 @@ async function getLineItem(lineItems) {
         name: product.name,
         price: item.price.unit_amount / 100,
         quantity: item.quantity,
-        image: product.image,
+        image: product.images,
       };
-
       ProductItems.push(productData);
     }
   }
+
   return ProductItems;
 }
 
@@ -57,7 +59,7 @@ const webHooks = async (request, response) => {
         session.id
       );
 
-      const productDetails = await getLineItem(lineItems);
+      const productDetails = await getLineItems(lineItems);
 
       const orderDetails = {
         productDetails: productDetails,
@@ -67,9 +69,14 @@ const webHooks = async (request, response) => {
           paymentId: session.payment_intent,
           payment_method_type: session.payment_method_types,
           payment_status: session.payment_status,
-          shipping_options: session.shipping_options,
-          totalAmount: session.amount_total / 100,
         },
+        shipping_options: session.shipping_options.map((s) => {
+          return {
+            ...s,
+            shipping_amount: s.shipping_amount / 100,
+          };
+        }),
+        totalAmount: session.amount_total / 100,
       };
 
       const order = new orderModel(orderDetails);
