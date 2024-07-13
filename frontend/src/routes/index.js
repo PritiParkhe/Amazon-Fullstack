@@ -15,6 +15,7 @@ import CategoryProducts from "../components/CategoryProducts";
 import Checkout from "../pages/Checkout";
 import Success from "../pages/Success";
 import Order from "../pages/Order";
+import Cancel from "../pages/Cancel";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
       {
         path: "/success",
         element: <Success />
+      },
+      {
+        path: "/cancel",
+        element: <Cancel />
       },
       {
         path : "/order",

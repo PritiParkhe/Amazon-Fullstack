@@ -3,9 +3,9 @@ import addTocartProductModel from "../../models/cartProduct.js";
 const countAddToProductController = async (req, res) => {
   try {
     const userId = req.userId;
-    console.log(`Counting products for user: ${userId}`);
+    // console.log(`Counting products for user: ${userId}`);
     const count = await addTocartProductModel.countDocuments({ userId: userId });
-    console.log(`Count result: ${count}`);
+    // console.log(`Count result: ${count}`);
 
     res.json({
       data: {

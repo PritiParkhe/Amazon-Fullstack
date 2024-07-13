@@ -11,6 +11,7 @@ const Checkout = () => {
 
   const fetchCartProducts = async () => {
     try {
+      console.log("Fetching cart products...");
       const response = await fetch(AllApiUrls.viewCartProducts.url, {
         method: AllApiUrls.viewCartProducts.method,
         credentials: "include",
@@ -18,6 +19,11 @@ const Checkout = () => {
           "content-type": "application/json",
         },
       });
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch cart products: ${response.statusText}`);
+      }
+
       const responseData = await response.json();
       console.log("Fetched cart products:", responseData);
 
@@ -38,6 +44,7 @@ const Checkout = () => {
         setError("Failed to fetch cart products");
       }
     } catch (error) {
+      console.error("Error fetching cart products:", error);
       setError("An error occurred while fetching cart products");
     } finally {
       setLoading(false);
@@ -45,34 +52,44 @@ const Checkout = () => {
   };
 
   const handlePayment = async () => {
-    const stripePromise = await loadStripe(
-      process.env.REACT_APP_STRIPE_PUBLIC_KEY
-    );
-    const response = await fetch(AllApiUrls.payment.url, {
-      method: AllApiUrls.payment.method,
-      credentials: "include",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        cartItems: data,
-      }),
-    });
-
-    const responseData = await response.json();
-
-    if (responseData?.id) {
-      const { error } = await stripePromise.redirectToCheckout({
-        sessionId: responseData.id,
+    try {
+      const stripePromise = await loadStripe(
+        process.env.REACT_APP_STRIPE_PUBLIC_KEY
+      );
+  
+      console.log("Initializing payment process...");
+  
+      const response = await fetch(AllApiUrls.payment.url, {
+        method: AllApiUrls.payment.method,
+        credentials: "include",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          cartItems: data,
+        }),
       });
-
-      if (error) {
-        console.error("Error redirecting to checkout:", error);
+  
+      const responseData = await response.json();
+      console.log("Payment response data:", responseData);
+  
+      if (responseData?.id) {
+        const stripe = await stripePromise;
+        const { error } = await stripe.redirectToCheckout({
+          sessionId: responseData.id,
+        });
+  
+        if (error) {
+          console.error("Error redirecting to checkout:", error);
+        }
+      } else {
+        console.error("No session ID found in response");
       }
+    } catch (error) {
+      console.error("Error in payment process:", error);
     }
-
-    console.log("payment response", responseData);
   };
+  
 
   useEffect(() => {
     fetchCartProducts();
@@ -152,7 +169,7 @@ const Checkout = () => {
                 </span>
               </p>
               <p>
-                Shipping: <span className="float-right">₹50</span>
+                Shipping: <span className="float-right">₹80</span>
               </p>
               <p className="font-bold">
                 Total:{" "}

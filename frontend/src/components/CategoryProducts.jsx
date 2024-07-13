@@ -6,30 +6,30 @@ import AllApiUrls from "../services";
 const CategoryProducts = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [visibleCategories, setVisibleCategories] = useState({});
   const [selectCategory, setSelectCategory] = useState({});
-  const [filterCategoryList, setFilterCategoryList] = useState([]);
+  const [visibleCategories, setVisibleCategories] = useState({});
 
   useEffect(() => {
-    const selectedCategories = Object.keys(selectCategory).filter(
-      (key) => selectCategory[key]
-    );
-    setFilterCategoryList(selectedCategories);
+    fetchData();
   }, [selectCategory]);
 
   const fetchData = async () => {
     setLoading(true);
     try {
+      const selectedCategories = Object.keys(selectCategory).filter(
+        (key) => selectCategory[key]
+      );
+
       const response = await fetch(AllApiUrls.filterProduct.url, {
         method: AllApiUrls.filterProduct.method,
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ category: filterCategoryList }),
+        body: JSON.stringify({ category: selectedCategories }),
       });
+
       const responseData = await response.json();
       setData(responseData?.data || []);
-      console.log(responseData);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -37,9 +37,6 @@ const CategoryProducts = () => {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, [filterCategoryList]);
   const handleCategoryChange = (categoryTitle) => {
     setVisibleCategories((prevState) => ({
       ...prevState,
@@ -47,17 +44,13 @@ const CategoryProducts = () => {
     }));
   };
 
-  const handleSelectCategory = (e) => {
+  const handleCheckboxChange = (e, categoryTitle) => {
+    handleCategoryChange(categoryTitle);
     const { value, checked } = e.target;
     setSelectCategory((prev) => ({
       ...prev,
       [value]: checked,
     }));
-  };
-
-  const handleCheckboxChange = (e, categoryTitle) => {
-    handleCategoryChange(categoryTitle);
-    handleSelectCategory(e);
   };
 
   return (
@@ -97,26 +90,6 @@ const CategoryProducts = () => {
                     />
                     <label htmlFor={category.title}>{category.title}</label>
                   </div>
-                  {visibleCategories[category.title] && (
-                    <div className="ml-4">
-                      {category.options.map((option) => (
-                        <div
-                          key={option.id}
-                          className="flex items-center gap-3"
-                        >
-                          <input
-                            type="checkbox"
-                            name={option.label}
-                            id={option.value}
-                            value={option.value}
-                            checked={selectCategory[option.value] || false}
-                            onChange={handleSelectCategory}
-                          />
-                          <label htmlFor={option.value}>{option.label}</label>
-                        </div>
-                      ))}
-                    </div>
-                  )}
                 </div>
               ))}
             </form>
