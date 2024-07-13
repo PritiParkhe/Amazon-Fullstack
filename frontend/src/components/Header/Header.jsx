@@ -12,23 +12,21 @@ const Header = () => {
   const user = useSelector((state) => state?.user?.user);
   const [menuDisplay, setMenuDisplay] = useState(false);
   const context = useContext(Context);
-  const navigate =  useNavigate();
-  const searchInput = useLocation()
-  const [search,setSearch] = useState(searchInput?.search?.split("=")[1])
-  
+  const navigate = useNavigate();
+  const searchInput = useLocation();
+  const [search, setSearch] = useState(searchInput?.search?.split("=")[1]);
+
   console.log(searchInput?.search.split("=")[1]);
 
   const handleSearch = (e) => {
     const { value } = e.target;
-    setSearch(value); 
+    setSearch(value);
     if (value) {
       navigate(`/search?q=${value}`);
     } else {
       navigate("/search");
     }
   };
-  
-  
 
   return (
     <header>
@@ -51,12 +49,12 @@ const Header = () => {
             <option value="">All</option>
           </select>
           <input
-  type="text"
-  placeholder="Search"
-  className="w-full pl-2 h-10 text-black"
-  onChange={handleSearch} 
-  value={search}  // <-- Here
-/>
+            type="text"
+            placeholder="Search"
+            className="w-full pl-2 h-10 text-black"
+            onChange={handleSearch}
+            value={search} // <-- Here
+          />
 
           <div className="text-lg min-w-[35px] h-10 bg-[#febd68] flex items-center justify-center rounded-r-md">
             <FaSearch />
@@ -102,6 +100,12 @@ const Header = () => {
                       Admin Panel
                     </Link>
                   )}
+                  <Link
+                    to={"/order"}
+                    className=" whitespace-nowrap hidden md:block hover:bg-gray-200 p-2"
+                  >
+                    Order
+                  </Link>
                 </nav>
               </div>
             )}
