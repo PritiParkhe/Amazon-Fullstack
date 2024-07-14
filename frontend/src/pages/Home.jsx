@@ -47,6 +47,7 @@ const Home = () => {
       <MainHeader />
       <MainHeroSection />
       <CategoryProductsList categoryData={categoryData} />
+      
       <HorizontalCard
         products={airpodesProducts}
         heading={"Pick up where you left off"}

@@ -33,7 +33,7 @@ const HorizontalCard = ({ products, heading }) => {
           style={{ maxWidth: `calc(100% - 32px)` }} // Adjusted max width to account for padding
         >
           {products.map((product, index) => (
-            <Link to={"product/subcategory"} key={index} className="flex-shrink-0 w-48 mt-6 h-48">
+            <Link to={`/product/${product._id}`} key={index} className="flex-shrink-0 w-48 mt-6 h-48">
               <img
                 src={product.productImage[0]}
                 alt={product.title}

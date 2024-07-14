@@ -82,6 +82,10 @@ function Herosection() {
     }
   };
 
+  const handleFilterProduct =() =>{
+    navigate("/product/subcategory");
+  }
+
   return (
     <>
       <div className="h-10 bg-[#232f3e] text-white flex items-center justify-evenly">
@@ -149,6 +153,10 @@ function Herosection() {
               ) : (
                 <Link to={"/login"}>Sign In</Link>
               )}
+            </ul>
+            <ul>
+                <button onClick={handleFilterProduct} className="mt-2">Filter Product</button>
+                
             </ul>
           </div>
         </>
