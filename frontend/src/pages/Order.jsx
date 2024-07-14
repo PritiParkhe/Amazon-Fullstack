@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import AllApiUrls from "../services";
 import moment from "moment";
 import displayINRCurrency from "../services/displayCurrency";
-import Header from "../components/Header/Header";
+import MainHeader from "../components/Header/MainHeader";
 
 const Order = () => {
   const [data, setData] = useState([]);
@@ -23,7 +23,7 @@ const Order = () => {
 
   return (
     <>
-      <Header />
+      <MainHeader />
       <div className="container mx-auto p-4 bg-white">
         {!data.length && <p className="text-center">No Order available</p>}
         {data.map((item, index) => (

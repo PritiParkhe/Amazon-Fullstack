@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import Header from "./Header/Header";
 import SmallHerosection from "./Header/SmallHerosection";
 import AllApiUrls from "../services";
 import displayINRCurrency from "../services/displayCurrency";
 import Context from "../context";
 import { useNavigate } from "react-router-dom";
+import MainHeader from "./Header/MainHeader";
 
 function Cart() {
   const [data, setData] = useState([]);
@@ -132,7 +132,7 @@ function Cart() {
 
   return (
     <>
-      <Header />
+      <MainHeader />
       <SmallHerosection />
       <div className="container mx-auto border relative my-4 px-4">
         <div>

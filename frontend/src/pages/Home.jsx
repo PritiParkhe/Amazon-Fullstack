@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Header from "../components/Header/Header";
 import Herosection from "../components/Header/Herosection";
 import Footer from "../components/Footer/Footer";
 import CategoryProductsList from "../components/CategoryProductsList";
 import HorizontalCard from "../components/HorizontalCard";
 import fetchCategoryWiseProduct from "../Helper/getCategoryWiseProduct";
+import MainHeader from "../components/Header/MainHeader";
+import MainHeroSection from "../components/Header/MainHerosection";
 
 const Home = () => {
   const [airpodesProducts, setAirpodesProducts] = useState([]);
@@ -43,8 +44,8 @@ const Home = () => {
 
   return (
     <>
-      <Header />
-      <Herosection />
+      <MainHeader />
+      <MainHeroSection />
       <CategoryProductsList categoryData={categoryData} />
       <HorizontalCard
         products={airpodesProducts}

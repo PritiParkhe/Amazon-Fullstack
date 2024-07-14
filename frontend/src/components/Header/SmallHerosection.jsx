@@ -6,6 +6,7 @@ import AllApiUrls from "../../services";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserDetails } from "../../stores/userSlice";
+import { useMediaQuery } from "react-responsive";
 
 const SmallHerosection = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -36,6 +37,16 @@ const SmallHerosection = () => {
       navigate("/login");
     }
   };
+
+  // Use useMediaQuery to check for mobile screen (max-width: 768px)
+  const isMobile = useMediaQuery({ maxWidth: 768 });
+
+  // Render null if it's mobile
+  if (isMobile) {
+    return null;
+  }
+
+  // Render SmallHerosection for non-mobile screens (laptops)
   return (
     <>
       <div className="h-10 bg-[#232f3e] text-white flex items-center justify-evenly">

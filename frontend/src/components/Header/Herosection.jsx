@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { FaBars, FaTimes } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { FaBars, FaTimes } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { TfiAngleRight, TfiAngleLeft } from "react-icons/tfi";
-import AllApiUrls from '../../services';
-import { toast } from 'react-toastify';
-import { useDispatch, useSelector } from 'react-redux';
-import { setUserDetails } from '../../stores/userSlice';
-import Banner1 from '../../assets/banner1.jpg';
-import Banner2 from '../../assets/banner2.jpg';
-import Banner3 from '../../assets/banner3.jpg';
-import Banner4 from '../../assets/banner4.jpg';
-import Banner5 from '../../assets/banner5.jpg';
-import Banner6 from '../../assets/banner6.jpg';
-import Banner7 from '../../assets/banner7.jpg';
-import Banner8 from '../../assets/banner8.jpg';
+import AllApiUrls from "../../services";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserDetails } from "../../stores/userSlice";
+import Banner1 from "../../assets/banner1.jpg";
+import Banner2 from "../../assets/banner2.jpg";
+import Banner3 from "../../assets/banner3.jpg";
+import Banner4 from "../../assets/banner4.jpg";
+import Banner5 from "../../assets/banner5.jpg";
+import Banner6 from "../../assets/banner6.jpg";
+import Banner7 from "../../assets/banner7.jpg";
+import Banner8 from "../../assets/banner8.jpg";
 
 function Herosection() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const user = useSelector(state => state?.user?.user);
+  const user = useSelector((state) => state?.user?.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [currentImg, setCurrentImg] = useState(0);
@@ -63,7 +63,7 @@ function Herosection() {
   const handleUserLogout = async () => {
     const response = await fetch(AllApiUrls.logout.url, {
       method: AllApiUrls.logout.method,
-      credentials: 'include',
+      credentials: "include",
     });
     const data = await response.json();
     if (data.success) {
@@ -76,9 +76,9 @@ function Herosection() {
 
   const handleProfileClick = () => {
     if (user) {
-      navigate('/user');
+      navigate("/user");
     } else {
-      navigate('/login');
+      navigate("/login");
     }
   };
 
@@ -86,7 +86,11 @@ function Herosection() {
     <>
       <div className="h-10 bg-[#232f3e] text-white flex items-center justify-evenly">
         <div className="flex items-center cursor-pointer" onClick={toggleMenu}>
-          {menuOpen ? <FaTimes className="text-xl" /> : <FaBars className="text-xl" />}
+          {menuOpen ? (
+            <FaTimes className="text-xl" />
+          ) : (
+            <FaBars className="text-xl" />
+          )}
           <span className="font-bold text-sm pl-2">All</span>
         </div>
         <div className="flex-grow text-white text-10px flex justify-around">
@@ -110,10 +114,16 @@ function Herosection() {
 
       {menuOpen && (
         <>
-          <div className="fixed inset-0 bg-black bg-opacity-50 z-10" onClick={toggleMenu}></div>
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 z-10"
+            onClick={toggleMenu}
+          ></div>
           <div className="fixed top-0 left-0 min-w-[365px] h-full bg-white text-black z-20 shadow-lg">
             <div className="bg-[#232f3e] h-12 flex items-center justify-between mb-4 px-4 text-white">
-              <div className="text-3xl cursor-pointer" onClick={handleProfileClick}>
+              <div
+                className="text-3xl cursor-pointer"
+                onClick={handleProfileClick}
+              >
                 {user?.profileImage ? (
                   <img
                     src={user?.profileImage}
@@ -124,14 +134,20 @@ function Herosection() {
                   <FaRegCircleUser />
                 )}
               </div>
-              <Link to={"/login"} className="ml-2 font-bold" onClick={toggleMenu}>Hello, sign in</Link>
+              <Link
+                to={"/login"}
+                className="ml-2 font-bold"
+                onClick={toggleMenu}
+              >
+                Hello, sign in
+              </Link>
               <FaTimes className="cursor-pointer" onClick={toggleMenu} />
             </div>
             <ul>
               {user?._id ? (
                 <button onClick={handleUserLogout}>Sign Out</button>
               ) : (
-                <Link to={'/login'}>Sign In</Link>
+                <Link to={"/login"}>Sign In</Link>
               )}
             </ul>
           </div>
@@ -141,10 +157,16 @@ function Herosection() {
       <div className="container mx-auto px-4">
         <div className="relative h-screen w-full bg-gray-200 overflow-hidden">
           <div className="absolute z-10  w-full flex items-center justify-between text-4xl text-white mt-0">
-            <button className="py-16 px-5 h-[250px] hover:border border-[#007185]" onClick={prevImg}>
+            <button
+              className="py-16 px-5 h-[250px] hover:border border-[#007185]"
+              onClick={prevImg}
+            >
               <TfiAngleLeft />
             </button>
-            <button className="py-16 px-5 h-[250px] hover:border border-[#007185]" onClick={nextImg}>
+            <button
+              className="py-16 px-5 h-[250px] hover:border border-[#007185]"
+              onClick={nextImg}
+            >
               <TfiAngleRight />
             </button>
           </div>
@@ -155,7 +177,11 @@ function Herosection() {
                 key={banner}
                 style={{ transform: `translateX(-${currentImg * 100}%)` }}
               >
-                <img src={banner} alt={`Banner ${index}`} className="h-full w-full object-cover" />
+                <img
+                  src={banner}
+                  alt={`Banner ${index}`}
+                  className="h-full w-full object-cover"
+                />
               </div>
             ))}
           </div>

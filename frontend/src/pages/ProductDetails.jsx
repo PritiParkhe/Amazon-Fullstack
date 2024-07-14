@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useCallback, useContext } from "react";
-import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import { useParams } from "react-router-dom";
 import AllApiUrls from "../services";
@@ -10,6 +9,7 @@ import VerticalCard from "../components/VerticalCard";
 import fetchCategoryWiseProduct from "../Helper/getCategoryWiseProduct";
 import addToCart from '../Helper/addToCard.js'; 
 import Context from "../context";
+import MainHeader from "../components/Header/MainHeader.jsx";
 
 
 const ProductDetails = () => {
@@ -112,7 +112,7 @@ const ProductDetails = () => {
 
   return (
     <>
-      <Header />
+      <MainHeader />
       <SmallHerosection />
       <div className="container mx-auto p-4 bg-white">
         <div className="min-h-[200px] flex flex-col lg:flex-row gap-6">

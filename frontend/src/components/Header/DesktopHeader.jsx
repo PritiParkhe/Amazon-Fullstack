@@ -1,3 +1,4 @@
+
 import React, { useContext, useState } from "react";
 import amazonLogo from "../../assets/Logo.jpg";
 import { FaSearch, FaMapMarkerAlt } from "react-icons/fa";
@@ -8,7 +9,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Role from "../../services/userRole";
 import Context from "../../context";
 
-const Header = () => {
+const DesktopHeader = () => {
   const user = useSelector((state) => state?.user?.user);
   const [menuDisplay, setMenuDisplay] = useState(false);
   const context = useContext(Context);
@@ -130,4 +131,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default DesktopHeader;

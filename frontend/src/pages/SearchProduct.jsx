@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import Header from '../components/Header/Header';
 import Card from '../components/Card'; // Assuming this is where your Card component is defined
 import AllApiUrls from '../services';
 import fetchCategoryWiseProduct from '../Helper/getCategoryWiseProduct';
+import MainHeader from '../components/Header/MainHeader';
 
 const SearchProduct = () => {
   const query = useLocation();
@@ -44,7 +44,7 @@ const SearchProduct = () => {
 
   return (
     <>
-      <Header />
+      <MainHeader />
       <div className='container mx-auto p-4'>
         {loading && <p className='text-lg text-center'>Loading...</p>}
         <p>Search Result: {searchResults.length}</p>
