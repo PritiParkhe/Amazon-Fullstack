@@ -82,9 +82,9 @@ function Herosection() {
     }
   };
 
-  const handleFilterProduct =() =>{
+  const handleFilterProduct = () => {
     navigate("/product/subcategory");
-  }
+  };
 
   return (
     <>
@@ -155,8 +155,9 @@ function Herosection() {
               )}
             </ul>
             <ul>
-                <button onClick={handleFilterProduct} className="mt-2">Filter Product</button>
-                
+              <button onClick={handleFilterProduct} className="mt-2">
+                Filter Product
+              </button>
             </ul>
           </div>
         </>
