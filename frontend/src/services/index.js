@@ -1,4 +1,5 @@
 const backendDomain = "http://localhost:8000";
+
 const AllApiUrls = {
   signUp: {
     url: `${backendDomain}/api/signup`,
@@ -60,9 +61,9 @@ const AllApiUrls = {
     url: `${backendDomain}/api/view-cart-product`,
     method: "get",
   },
-  updateCartProducts: {
+  updateCartProduct: {
     url: `${backendDomain}/api/update-cart-product`,
-    method: "put",
+    method: "post",
   },
   deleteCartProducts: {
     url: `${backendDomain}/api/delete-cart-product`,
@@ -85,4 +86,5 @@ const AllApiUrls = {
     method: "get",
   },
 };
+
 export default AllApiUrls;

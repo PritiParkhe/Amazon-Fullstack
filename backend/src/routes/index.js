@@ -21,6 +21,7 @@ import { filterProductController } from "../controllers/product/filterProduct.js
 import { paymentController } from "../controllers/payment/paymentController.js";
 import { webHooks } from "../controllers/payment/webHook.js";
 import { orderController } from "../controllers/payment/orderController.js";
+import { updateAddToCartProduct } from "../controllers/user/updateCartProduct.js";
 
 export const router = express.Router();
 
@@ -48,7 +49,7 @@ router.post("/filter-product", filterProductController);
 router.post("/addtocart", authToken, addToCartProductController);
 router.get("/countCartProduct", authToken, countAddToProductController);
 router.get("/view-cart-product", authToken, viewCartProductsController);
-router.put("/update-cart-product", authToken, updateProductController);
+router.post("/update-cart-product",authToken,updateAddToCartProduct);
 router.delete("/delete-cart-product", authToken, deleteCartProduct);
 
 //payment

@@ -34,11 +34,11 @@ const Order = () => {
             <div className="flex flex-col lg:flex-row lg:justify-between">
               <div className="order-products grid gap-4">
                 {item.productDetails.map((product, index) => (
-                  <div key={product.productId + index} className="product-item flex flex-col lg:flex-row gap-4 p-2 border rounded bg-gray-50">
+                  <div key={product.productId + index} className="product-item flex flex-col :flex-row gap-4 p-2 border rounded bg-gray-50">
                     <img
                       src={product.image[0]}
                       alt={product.title}
-                      className="w-full sm:w-28 object-cover p-1 border rounded"
+                      className="w-full sm:w-28 h-auto object-cover p-1 border rounded"
                     />
                     <div>
                       <p className="font-medium text-lg line-clamp-1">

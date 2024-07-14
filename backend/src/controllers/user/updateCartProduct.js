@@ -1,35 +1,30 @@
-const updateProductController = async (req, res) => {
-  try {
-    const currentUserId = req.userId;
-    const { _id, quantity } = req.body;
+// updateProduct.js
+import addTocartProductModel from "../../models/cartProduct.js"; // Adjust model path as per your application
 
-    // Update query
-    const updateProduct = await addToCartProductModel.findOneAndUpdate(
-      { _id, userId: currentUserId },
-      { $set: { quantity } },
-      { new: true } // Ensure we get the updated document back
-    );
+const updateAddToCartProduct = async(req,res)=>{
+  try{
+      const currentUserId = req.userId 
+      const addToCartProductId = req?.body?._id
 
-    if (!updateProduct) {
-      return res.status(400).json({
-        message: "Failed to update product quantity",
-        error: true,
-        success: false,
-      });
-    }
+      const qty = req.body.quantity
 
-    res.json({
-      message: "Product updated successfully",
-      data: updateProduct, // Return updated product data
-      error: false,
-      success: true,
-    });
-  } catch (err) {
-    console.error("Error updating product:", err);
-    res.status(500).json({
-      message: err?.message || err,
-      error: true,
-      success: false,
-    });
+      const updateProduct = await addTocartProductModel.updateOne({_id : addToCartProductId},{
+          ...(qty && {quantity : qty})
+      })
+
+      res.json({
+          message : "Product Updated",
+          data : updateProduct,
+          error : false,
+          success : true
+      })
+
+  }catch(err){
+      res.json({
+          message : err?.message || err,
+          error : true,
+          success : false
+      })
   }
-};
+}
+export {updateAddToCartProduct}

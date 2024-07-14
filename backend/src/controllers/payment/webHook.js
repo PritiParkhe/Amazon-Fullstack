@@ -43,7 +43,7 @@ const webHooks = async (request, response) => {
       header,
       endpointSecret
     );
-    console.log("event", event);
+    // console.log("event", event);
   } catch (err) {
     response.status(400).send(`Webhook Error: ${err.message}`);
     return;
@@ -53,7 +53,7 @@ const webHooks = async (request, response) => {
   switch (event.type) {
     case "checkout.session.completed":
       const session = event.data.object;
-      console.log("session", session);
+      // console.log("session", session);
 
       const lineItems = await stripe.checkout.sessions.listLineItems(
         session.id

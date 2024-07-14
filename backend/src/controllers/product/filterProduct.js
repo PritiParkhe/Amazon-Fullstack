@@ -3,13 +3,13 @@ import productModel from "../../models/productModel.js";
 const filterProductController = async (req, res) => {
   try {
     const categories = req.body.category || [];
-    console.log('Received categories:', categories); // For debugging
+    // console.log('Received categories:', categories); // For debugging
 
     const products = await productModel.find({
       category: { $in: categories },
     });
 
-    console.log('Retrieved products:', products); // For debugging
+    // console.log('Retrieved products:', products); // For debugging
 
     res.json({
       data: products,

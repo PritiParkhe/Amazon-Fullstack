@@ -11,9 +11,7 @@ function Cart() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const context = useContext(Context);
-  const navigate = useNavigate()
-  
-  
+  const navigate = useNavigate();
 
   const fetchCartProducts = async () => {
     try {
@@ -50,63 +48,49 @@ function Cart() {
     }
   };
 
-  const handleCheckout = () =>{
-    navigate("/checkout")
-  }
-  const updateCartProduct = async (productId, quantity) => {
-    try {
-      const response = await fetch(AllApiUrls.updateCartProducts.url, {
-        method: AllApiUrls.updateCartProducts.method,
+  const handleCheckout = () => {
+    navigate("/checkout");
+  };
+
+  const increaseQty = async (id, qty) => {
+    const response = await fetch(AllApiUrls.updateCartProduct.url, {
+      method: AllApiUrls.updateCartProduct.method,
+      credentials: "include",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        _id: id,
+        quantity: qty + 1,
+      }),
+    });
+
+    const responseData = await response.json();
+
+    if (responseData.success) {
+      fetchCartProducts();
+    }
+  };
+
+  const decraseQty = async (id, qty) => {
+    if (qty >= 2) {
+      const response = await fetch(AllApiUrls.updateCartProduct.url, {
+        method: AllApiUrls.updateCartProduct.method,
         credentials: "include",
         headers: {
           "content-type": "application/json",
         },
         body: JSON.stringify({
-          _id: productId,
-          quantity: quantity,
+          _id: id,
+          quantity: qty - 1,
         }),
       });
+
       const responseData = await response.json();
-      console.log("Update response:", responseData);
+
       if (responseData.success) {
-        // Update the specific product in data state
-        const updatedData = data.map((item) => {
-          if (item._id === productId) {
-            return {
-              ...item,
-              quantity: responseData.data?.quantity || quantity, // Use responseData.data.quantity if available, otherwise use current quantity
-            };
-          }
-          return item;
-        });
-        setData(updatedData);
-      } else {
-        console.error("Failed to update quantity:", responseData.message);
+        fetchCartProducts();
       }
-    } catch (error) {
-      console.error("An error occurred while updating quantity:", error);
-    }
-  };
-
-  const increaseQty = (productId, qty) => {
-    console.log(
-      "Increasing quantity for product:",
-      productId,
-      "current quantity:",
-      qty
-    );
-    updateCartProduct(productId, qty + 1);
-  };
-
-  const decreaseQty = (productId, qty) => {
-    console.log(
-      "Decreasing quantity for product:",
-      productId,
-      "current quantity:",
-      qty
-    );
-    if (qty > 1) {
-      updateCartProduct(productId, qty - 1);
     }
   };
 
@@ -141,10 +125,6 @@ function Cart() {
     fetchCartProducts();
   }, []);
 
-  const totalQty = data.reduce(
-    (previousValue, currentValue) => previousValue + currentValue.quantity,
-    0
-  );
   const totalPrice = data.reduce(
     (prev, curr) => prev + curr.quantity * curr?.productId?.sellingPrice,
     0
@@ -209,7 +189,7 @@ function Cart() {
                             <button
                               className="border hover:border-black w-6 h-6"
                               onClick={() =>
-                                decreaseQty(product._id, product.quantity)
+                                decraseQty(product?._id, product?.quantity)
                               }
                             >
                               -
@@ -218,7 +198,7 @@ function Cart() {
                             <button
                               className="border hover:border-black w-6 h-6"
                               onClick={() =>
-                                increaseQty(product._id, product.quantity)
+                                increaseQty(product?._id, product?.quantity)
                               }
                             >
                               +
@@ -251,9 +231,9 @@ function Cart() {
                     <span className="ml-2">This order contains a gift.</span>
                   </div>
                 </>
-                <button 
-                className="w-3/4 mt-4 bg-yellow-400 py-2 rounded-lg"
-                onClick={handleCheckout}
+                <button
+                  className="w-3/4 mt-4 bg-yellow-400 py-2 rounded-lg"
+                  onClick={handleCheckout}
                 >
                   Proceed To Checkout
                 </button>
