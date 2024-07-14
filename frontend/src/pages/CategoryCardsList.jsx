@@ -4,6 +4,7 @@ import Footer from "../components/Footer/Footer";
 import Cards from '../components/Cards';
 import fetchCategoryWiseProduct from "../Helper/getCategoryWiseProduct";
 import MainHeader from '../components/Header/MainHeader';
+import MainFooter from '../components/Footer/MainFooter';
 
 const CategoryCardsList = () => {
   const { categoryName } = useParams(); // Get category name from URL parameter
@@ -28,7 +29,7 @@ const CategoryCardsList = () => {
       <div>
         <Cards categoryData={categoryData} />
       </div>
-      <Footer />
+      <MainFooter/>
     </>
   );
 }

@@ -67,69 +67,85 @@ function Signup() {
 
   return (
     <>
-      <div className='w-2/4 min-w-[450px] h-fit p-2 m-auto flex flex-col items-center '>
-        <img src={Logo} alt='' className='h-16 mb-2 ' />
-        <form onSubmit={handleSubmit} className='border border-lightgray w-3/5 h-400 flex flex-col items-center justify-center p-4'>
-          <div className='w-20 h-20 mx-auto relative rounded-full overflow-hidden'>
-            <div>
-              <img src={formData.profileImage || LoginIcon} alt="" />
-            </div>
-            <label>
-              <div className='text-xs bg-opacity-80 pb-4 pt-2 bg-gray-100 py-4 text-center absolute bottom-0 w-full cursor-pointer'>
-                Upload photo
-              </div>
+      <div className='w-full max-w-md p-4 mx-auto flex flex-col items-center'>
+        <img src={Logo} alt='Logo' className='h-16 mb-4' />
+        <form onSubmit={handleSubmit} className='w-full bg-white p-4 rounded-lg shadow-md'>
+          <div className='w-24 h-24 mx-auto relative rounded-full overflow-hidden mb-4'>
+            <img src={formData.profileImage || LoginIcon} alt="Profile" className='w-full h-full object-cover' />
+            <label className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-xs cursor-pointer'>
+              Upload photo
               <input type="file" className='hidden' onChange={handleUploadImg} />
             </label>
           </div>
 
-          <div className='w-full p-2 gap-4'>
-            <label>Name</label>
-            <input
-              className='w-full p-2 border border-gray-300 rounded mb-5'
-              type='text'
-              name='name'
-              value={formData.name}
-              onChange={handleChange}
-              placeholder='John Smith'
-            />
-            <label>Email</label>
-            <input
-              className='w-full p-2 border border-gray-300 rounded mb-5'
-              type='email'
-              name='email'
-              value={formData.email}
-              onChange={handleChange}
-              placeholder='example@example.com'
-            />
-            <label>Password</label>
-            <div className="relative flex items-center">
+          <div className='space-y-4'>
+            <div>
+              <label className='block text-sm font-medium text-gray-700'>Name</label>
               <input
-                type={showPassword ? "text" : "password"}
-                placeholder="********"
-                name="password"
-                value={formData.password}
+                className='w-full p-2 border border-gray-300 rounded'
+                type='text'
+                name='name'
+                value={formData.name}
                 onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded pr-10"
-                required
-                autoComplete=''
+                placeholder='John Smith'
               />
-              <div
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </div>
+
+            <div>
+              <label className='block text-sm font-medium text-gray-700'>Email</label>
+              <input
+                className='w-full p-2 border border-gray-300 rounded'
+                type='email'
+                name='email'
+                value={formData.email}
+                onChange={handleChange}
+                placeholder='example@example.com'
+              />
+            </div>
+
+            <div>
+              <label className='block text-sm font-medium text-gray-700'>Password</label>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="********"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="w-full p-2 border border-gray-300 rounded pr-10"
+                  required
+                  autoComplete='new-password'
+                />
+                <div
+                  className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </div>
               </div>
             </div>
 
-            <button className='h-9 w-full mt-3 px-4 bg-yellow-500 border-none outline-none rounded-md mb-5 hover:bg-gray-200 border border-gray-300' onClick={handleSubmit}>Create Account in Amazon</button>
-            <p className='text-xs w-full text-center mb-5'>
-              By continuing, you agree to Amazon's
-              <span className='text-blue-600'> Conditions of Use </span>and
-              <span className='text-blue-600'> Privacy Notice </span>
-            </p>
+            <button
+              type='submit'
+              className='w-full py-2 bg-yellow-500 rounded hover:bg-yellow-600 transition'
+            >
+              Create Account in Amazon
+            </button>
           </div>
+
+          <p className='text-xs text-center mt-4'>
+            By continuing, you agree to Amazon's
+            <Link to='/terms' className='text-blue-600'> Conditions of Use </Link> and
+            <Link to='/privacy' className='text-blue-600'> Privacy Notice</Link>.
+          </p>
         </form>
-        <Link to={'/login'} className='w-40 mt-3 h-9 bg-yellow-500 border-none outline-none rounded-lg hover:bg-gray-200 border border-gray-300 flex items-center justify-center'> Back to Login</Link>
+
+        <Link
+          to='/login'
+          className='mt-4 w-1/2 text-center py-2 bg-yellow-500 rounded hover:bg-yellow-600 transition'
+        >
+          Back to Login
+        </Link>
       </div>
     </>
   );

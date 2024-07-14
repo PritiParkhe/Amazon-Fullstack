@@ -139,7 +139,7 @@ function Cart() {
           {loading ? (
             <div>Loading...</div>
           ) : data.length === 0 ? (
-            <div className="bg-white mt-4 shadow-xl p-6 w-[985px] ml-4 ">
+            <div className="bg-white mt-4 shadow-xl p-6 w-full sm:w-[985px] lg:ml-4">
               <div className="mb-1">
                 <p className="text-3xl">Your Amazon Cart is empty.</p>
               </div>
@@ -156,7 +156,7 @@ function Cart() {
               </p>
             </div>
           ) : (
-            <div className="flex flex-col lg:flex-row mt-3 ">
+            <div className="flex flex-col lg:flex-row mt-3">
               <div className="flex-1">
                 <div className="bg-white p-4 flex-1 mb-4">
                   <h2 className="font-medium border-b border-gray-300 pb-4">
@@ -167,16 +167,16 @@ function Cart() {
                       key={product._id || index}
                       className="flex flex-col lg:flex-row p-1 mt-1 border-b border-gray-200"
                     >
-                      <div className="flex items-center mt-4 mb-6">
-                        <div className="flex-shrink-0 w-24 h-24 ">
+                      <div className="flex flex-col sm:flex-row items-center mt-4 mb-6">
+                        <div className="flex-shrink-0 w-24 h-24">
                           <img
                             src={product.productId.productImage[0]}
                             alt={product.productId.title}
                             className="w-full h-full object-contain"
                           />
                         </div>
-                        <div className="ml-8 flex-1 ">
-                          <h4 className="font-semibold text-xl">
+                        <div className="ml-0 sm:ml-8 mt-4 sm:mt-0 flex-1">
+                          <h4 className="font-semibold text-lg sm:text-xl">
                             {product.productId.title}
                           </h4>
                           <p className="font-semibold mt-2">
@@ -205,7 +205,7 @@ function Cart() {
                             </button>
                             <div className="flex items-center">
                               <button
-                                className="ml-4 text-[#007185] text-sm "
+                                className="ml-4 text-[#007185] text-sm"
                                 onClick={() => handleDelete(product._id)}
                               >
                                 Delete <span className="ml-2"> |</span>

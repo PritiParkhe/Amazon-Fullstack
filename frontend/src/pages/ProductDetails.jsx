@@ -10,11 +10,13 @@ import fetchCategoryWiseProduct from "../Helper/getCategoryWiseProduct";
 import addToCart from '../Helper/addToCard.js'; 
 import Context from "../context";
 import MainHeader from "../components/Header/MainHeader.jsx";
+import MainFooter from "../components/Footer/MainFooter.jsx";
 
 
 const ProductDetails = () => {
   const { fetchUserAddToCart } = useContext(Context)
   const [mobileProducts, setMobileProducts] = useState([]);
+  const [airpodesProducts, setAirpodesProducts] = useState([]);
   const [data, setData] = useState({
     title: "",
     brandName: "",
@@ -95,6 +97,8 @@ const ProductDetails = () => {
     const fetchData = async () => {
       try {        
 
+        const airpodesResponse = await fetchCategoryWiseProduct('airpods');
+        setAirpodesProducts(airpodesResponse.data);
         const mobileResponse = await fetchCategoryWiseProduct('mobiles');
         setMobileProducts(mobileResponse.data);
       } catch (error) {
@@ -219,10 +223,11 @@ const ProductDetails = () => {
             
           </div>
         </div>
+        <VerticalCard products={airpodesProducts} heading={"Latest in airpodes"}/>
         <VerticalCard products={mobileProducts} heading={"Latest in mobile"}/>
 
       </div>
-      <Footer />
+      <MainFooter />
     </>
   );
 };

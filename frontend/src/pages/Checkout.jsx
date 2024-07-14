@@ -89,7 +89,6 @@ const Checkout = () => {
       console.error("Error in payment process:", error);
     }
   };
-  
 
   useEffect(() => {
     fetchCartProducts();
@@ -101,9 +100,9 @@ const Checkout = () => {
         Checkout
       </h1>
       <div className="container mx-auto p-6">
-        <div className="flex justify-center mx-14 gap-4 ">
-          <div className="w-3/5 bg-white p-6 rounded ">
-            <h3 className="text-xl font-semibold mb-4">
+        <div className="flex flex-col lg:flex-row justify-center lg:mx-14 gap-4">
+          <div className="w-full lg:w-3/5 bg-white p-6 rounded">
+            <h3 className="text-xl font-bold mb-4 text-[#c45500]">
               1. Select a payment method
             </h3>
             <div className="border border-gray-300 rounded-lg p-4 mb-6">
@@ -119,7 +118,7 @@ const Checkout = () => {
               </div>
             </div>
 
-            <h3 className="text-xl font-semibold mb-4">
+            <h3 className="text-xl font-bold mb-4 text-[#c45500]">
               2. Review items and delivery
             </h3>
             <div className="border border-gray-300 rounded-lg p-4">
@@ -132,7 +131,7 @@ const Checkout = () => {
                 data.map((item) => (
                   <div
                     key={item.productId._id}
-                    className="flex items-center mb-4"
+                    className="flex flex-col sm:flex-row items-center mb-4"
                   >
                     <img
                       src={item.productId.productImage[0]}
@@ -153,9 +152,9 @@ const Checkout = () => {
             </div>
           </div>
 
-          <div className="w-1/5 bg-white p-6 rounded border border-gray-300 h-1/3">
-            <h3 className="text-xl font-semibold mb-4">Order Summary</h3>
-            <div className="mb-4">
+          <div className="w-full lg:w-1/5 bg-white p-6 rounded border border-gray-300 h-1/3">
+            <h3 className="text-xl font-bold mb-4 text-[#c45500]">Order Summary</h3>
+            <div className="mb-4 text-[#c45500]">
               <p>
                 Items:{" "}
                 <span className="float-right">

@@ -15,13 +15,13 @@ const Card = ({ products }) => {
 
   return (
     <div className='container mt-2'>
-      <div className='flex flex-wrap ml-4 mr-4'>
+      <div className='flex flex-wrap lg:ml-4 lg:mr-4'>
         {products && products.length > 0 ? (
           products.map((product) => (
             <Link 
               to={`/product/${product._id}`}  
               key={product._id} 
-              className='w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-2'
+              className='w-full  md:w-1/3 lg:w-1/4 p-2'
             > 
               <div className='bg-white rounded-sm shadow p-4 flex flex-col h-full min-h-[350px]'>
                 <div className='bg-white h-48 flex justify-center items-center mb-2'> 

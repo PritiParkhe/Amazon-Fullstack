@@ -2,7 +2,7 @@ import React from "react";
 
 const FooterforSignup = () => {
   return (
-    <div className="h-40 flex flex-col items-center justify-center text-xs bottom-0 mt-2 bg-white">
+    <div className="h-40 flex flex-col items-center justify-center text-xs bottom-0  bg-white">
       <div className="pages flex space-x-4 pt-6">
         <p className="hover:underline">Conditions</p>
         <p className="hover:underline">Privacy Notice</p>

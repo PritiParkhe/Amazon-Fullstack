@@ -94,8 +94,8 @@ const MobileHeader = () => {
                     <nav>
                       {user?.role === Role.ADMIN && (
                         <Link
-                          to="/admin-panel/all-products"
-                          className="block hover:bg-gray-200 p-2"
+                          to={"/admin-panel/all-products"}
+                          className=" whitespace-nowrap hidden md:block hover:bg-gray-200 p-2"
                         >
                           Admin Panel
                         </Link>
@@ -153,7 +153,7 @@ const MobileHeader = () => {
             className="fixed inset-0 bg-black bg-opacity-50 z-10"
             onClick={toggleMenu}
           ></div>
-          <div className="fixed top-0 left-0 min-w-[300px] h-full bg-white text-black z-20 shadow-lg">
+          <div className="fixed top-0 left-0 min-w-[320px] h-full bg-white text-black z-20 shadow-lg">
             <div className="bg-[#232f3e] h-12 flex items-center justify-between mb-4 px-4 text-white">
               <div
                 className="text-3xl cursor-pointer"

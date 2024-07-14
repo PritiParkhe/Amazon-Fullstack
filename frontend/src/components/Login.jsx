@@ -61,14 +61,14 @@ function Login() {
 
   return (
     <>
-      <div className="w-2/5 min-w-[450px] h-fit p-4 m-auto flex flex-col items-center bg-white">
+      <div className="w-full max-w-sm lg:max-w-sm  p-4 mx-auto flex flex-col items-center bg-white">
         <div className="mb-5">
           <img src={Logo} alt="" className="h-16" />
         </div>
 
         <form
           onSubmit={handleSubmit}
-          className="border border-gray-300 w-3/5 h-[400px] flex flex-col items-center justify-center p-4"
+          className="border border-gray-300 w-full h-[400px] flex flex-col items-center justify-center p-4"
         >
           <h3 className="mb-4">Sign In</h3>
 
@@ -107,7 +107,7 @@ function Login() {
             </div>
             <Link
               to={"/forgot-password"}
-              className="block w-fit ml-auto hover:underline hover:text-yellow-600"
+              className="block w-fit ml-auto hover:underline hover:text-yellow-600 mt-1"
             >
               Forgot Password
             </Link>
@@ -115,7 +115,7 @@ function Login() {
 
           <button
             type="submit"
-            className="w-3/5 h-9 bg-yellow-500 border-none outline-none rounded-lg mt-8"
+            className="w-full lg:w-3/5 h-9 bg-yellow-500 border-none outline-none rounded-lg mt-8"
             onClick={handleSubmit}
           >
             Login
@@ -130,7 +130,7 @@ function Login() {
 
         <Link
           to={"/sign-up"}
-          className="w-3/5 h-9 text-xs mt-5 hover:bg-gray-300 border border-gray-300 flex items-center justify-center"
+          className="w-full lg:max-w-sm h-9 text-xs mt-5 hover:bg-gray-300 border border-gray-300 flex items-center justify-center"
         >
           Create Account in Amazon
         </Link>
