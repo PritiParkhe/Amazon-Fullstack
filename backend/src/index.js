@@ -1,10 +1,10 @@
 import dotenv from "dotenv";
-import connectDB from "./src/db/index.js";
+import connectDB from "./db/index.js";
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
-import { router } from "./src/routes/index.js";
+import { router } from "./routes/index.js";
 
 dotenv.config({ path: "./env" });
 
