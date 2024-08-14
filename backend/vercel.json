@@ -1,16 +1,16 @@
 {
-  "version" : 2,
-  "name" : "Full-stack E-commerce",
-  "builds" : [
+  "version": 2,
+  "name": "Full-stack E-commerce",
+  "builds": [
     {
-      "src" : "./src/index.js",
-      "use" : "@vercel/node"
+      "src": "src/index.js",
+      "use": "@vercel/node"
     }
   ],
-  "routes" : [
+  "routes": [
     {
-      "src" : "/(.*)",
-      "dest" : "/"
+      "src": "/(.*)",
+      "dest": "/"
     }
   ]
 }
