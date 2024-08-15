@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import { router } from "./routes/index.js";
 
-dotenv.config({ path: "../env" });
+dotenv.config({ path: "../.env" });
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -22,7 +22,6 @@ app.use(bodyParser.json({ limit: "10mb" }));
 app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 app.use(cookieParser());
 app.use("/api", router);
-
 
 // Connect to DB and start the server
 connectDB().then(() => {
