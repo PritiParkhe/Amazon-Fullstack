@@ -8,55 +8,74 @@ const secretKey = process.env.JWT_SECRET;
 async function userSigninController(req, res) {
   try {
     const { email, password } = req.body;
-    // console.log(req.body);
+
+    // Check if email is provided
     if (!email) {
       return res.status(400).json({
         error: "Bad Request",
-        message: "Required email not provided",
+        message: "Email is required",
         success: false,
       });
     }
 
+    // Check if password is provided
     if (!password) {
       return res.status(400).json({
         error: "Bad Request",
-        message: "Required password not provided",
+        message: "Password is required",
         success: false,
       });
     }
 
+    // Find the user by email
     const user = await userModel.findOne({ email });
     if (!user) {
-      throw new Error("User not found");
+      return res.status(404).json({
+        error: "Not Found",
+        message: "User not found",
+        success: false,
+      });
     }
 
+    // Check if the provided password matches the stored hashed password
     const checkPassword = await bcrypt.compare(password, user.password);
-    // console.log("checkPassword",checkPassword);
 
     if (checkPassword) {
       const tokenData = {
         _id: user._id,
         email: user.email,
       };
-      const token = await jwt.sign(tokenData, secretKey, {
-        expiresIn: 60 * 60 * 10,
+
+      // Sign JWT token with user data and secret key
+      const token = jwt.sign(tokenData, secretKey, {
+        expiresIn: "10h", // 10 hours
       });
-      const tokenOption = {
+
+      // Set token options
+      const tokenOptions = {
         httpOnly: true,
-        secure: true,
       };
-      res.cookie("token", token, tokenOption).json({
-        message: "Login Successfully",
-        data: token,
-        success: true,
-        error: false,
-      });
+
+      // Send token in cookie and respond with success
+      res
+        .cookie("token", token, tokenOptions)
+        .status(200)
+        .json({
+          message: "Login Successfull",
+          data: token,
+          success: true,
+          error: false,
+        });
     } else {
-      throw new Error("Please check password again");
+      return res.status(401).json({
+        error: "Unauthorized",
+        message: "Incorrect password. Please try again.",
+        success: false,
+      });
     }
   } catch (error) {
-    res.json({
-      message: error.message || error,
+    res.status(500).json({
+      message: error.message || "Internal Server Error",
       error: true,
       success: false,
     });
