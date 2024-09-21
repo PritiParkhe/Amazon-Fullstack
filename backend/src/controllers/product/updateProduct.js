@@ -1,4 +1,4 @@
-import uploadProductPermission from "../../Helper/Permission.js";
+import uploadProductPermission from "../../Helper/permission.js";
 import productModel from "../../models/productModel.js";
 
 
