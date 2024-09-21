@@ -1,30 +1,29 @@
-import uploadProductPermission from "../../Helper/Permission.js";
+import uploadProductPermission from "../../Helper/permission.js";
 import productModel from "../../models/productModel.js";
 
-async function UploadProductController(req,res){
-  try{
-      const sessionUserId = req.userId
+async function UploadProductController(req, res) {
+  try {
+    const sessionUserId = req.userId;
 
-      if(!await uploadProductPermission(sessionUserId)){
-          throw new Error("Permission denied")
-      }
-  
-      const uploadProduct = new productModel(req.body)
-      const saveProduct = await uploadProduct.save()
+    if (!(await uploadProductPermission(sessionUserId))) {
+      throw new Error("Permission denied");
+    }
 
-      res.status(201).json({
-          message : "Product upload successfully",
-          error : false,
-          success : true,
-          data : saveProduct
-      })
+    const uploadProduct = new productModel(req.body);
+    const saveProduct = await uploadProduct.save();
 
-  }catch(err){
-      res.status(400).json({
-          message : err.message || err,
-          error : true,
-          success : false
-      })
+    res.status(201).json({
+      message: "Product upload successfully",
+      error: false,
+      success: true,
+      data: saveProduct,
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: err.message || err,
+      error: true,
+      success: false,
+    });
   }
 }
 
