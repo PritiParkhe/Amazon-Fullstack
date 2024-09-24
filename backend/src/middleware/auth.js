@@ -16,17 +16,23 @@ export async function authToken(req, res, next) {
     // Verify token
     jwt.verify(token, secretKey, (error, decoded) => {
       if (error) {
+        console.error("Token Verification Error:", error); // Log the error
         return res.status(403).json({
           message: "Invalid or expired token, please log in again.",
           error: true,
           success: false,
         });
       }
-
-      // Attach user ID to request
+    
+      console.log("Decoded Token:", decoded); // Log the decoded token
       req.userId = decoded?._id;
-      next(); // Continue to the next middleware/controller
+      next();
     });
+    
+
+     
+
+   
   } catch (error) {
     // General error handling
     res.status(500).json({
