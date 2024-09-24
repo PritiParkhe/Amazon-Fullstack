@@ -54,18 +54,17 @@ async function userSigninController(req, res) {
       // Set token options
       const tokenOptions = {
         httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "None",
       };
 
       // Send token in cookie and respond with success
-      res
-        .cookie("token", token, tokenOptions)
-        .status(200)
-        .json({
-          message: "Login Successfull",
-          data: token,
-          success: true,
-          error: false,
-        });
+      res.cookie("token", token, tokenOptions).status(200).json({
+        message: "Login Successfull",
+        data: token,
+        success: true,
+        error: false,
+      });
     } else {
       return res.status(401).json({
         error: "Unauthorized",
