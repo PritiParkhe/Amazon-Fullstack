@@ -3,6 +3,10 @@
 A scalable and secure Amazon-inspired **E-commerce platform** built using the **MERN Stack**, featuring real-time payments, admin controls, product zooming, and a mobile-first responsive UI.
 
 ---
+## 🚀 Demo
+
+Check out the live demo: [View Demo](https://amazon-fullstack-m8xz.vercel.app)
+
 
 ## Features
 
