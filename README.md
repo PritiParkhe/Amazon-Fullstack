@@ -48,11 +48,17 @@ A scalable and secure Amazon-inspired **E-commerce platform** built using the **
 
 > Add actual screenshots or mockups if available.
 
-- Home Page  
-- Product Page with Zoom  
-- Cart & Checkout  
-- Admin Panel  
-- Mobile View
+- ![Homepage](./frontend/src/assets/homepage.png)
+- ![All Products view](./frontend/src/assets/productslist.png)
+- ![Product Page with Zoom ](./frontend/src/assets/productzoomin.png) 
+- ![Cart & Checkout](./frontend/src/assets/checkoutpage.png)
+- ![Buy & Checkout](./frontend/src/assets/buycheckoutpage.png)
+- ![order & history](./frontend/src/assets/orderhistory.png)
+- ![Admin Panel](./frontend/src/assets/adminpanel.png)
+- ![Adimn add product form ](./frontend/src/assets/adminaddproductform.png)
+- ![Adimn add product form 2](./frontend/src/assets/adminaddproductform2.png) 
+- ![Mobile View](./frontend/src/assets/mobileview1.png)
+- ![Mobile View](./frontend/src/assets/mobileview2.png)
 
 ---
 
